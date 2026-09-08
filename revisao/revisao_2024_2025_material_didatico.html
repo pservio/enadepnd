@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisão dirigida — ENADE 2024 e PND 2025 · Artes Visuais (Licenciatura)</title>
+<style>
+  :root {
+    --paper: #EEEBE2; --paper-raised: #F7F5EF; --paper-well: #E7E2D3;
+    --rule: #D9D4C4; --rule-strong: #C3BCA6;
+    --ink: #1E2A44; --ink-soft: #46587F; --graphite: #6B675F;
+    --accent: #1E2A44; --accent-contrast: #FDFBF6;
+    --good: #3F6B4D; --good-bg: rgba(63,107,77,0.12);
+    --bad: #A23B2E; --bad-bg: rgba(162,59,46,0.10);
+    --t1: #3F6B4D; --t1-bg: rgba(63,107,77,0.10);
+    --t2: #93691B; --t2-bg: rgba(147,105,27,0.12);
+    --t3: #6B4E9E; --t3-bg: rgba(107,78,158,0.10);
+    --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', Consolas, 'Roboto Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #141922; --paper-raised: #1B2129; --paper-well: #10141B;
+      --rule: #2B3242; --rule-strong: #3A4356;
+      --ink: #E7E3D8; --ink-soft: #AFC0DE; --graphite: #9A9890;
+      --accent: #93AAD9; --accent-contrast: #10141B;
+      --good: #7FBB92; --good-bg: rgba(127,187,146,0.15);
+      --bad: #E0776A; --bad-bg: rgba(224,119,106,0.15);
+      --t1: #7FBB92; --t1-bg: rgba(127,187,146,0.13);
+      --t2: #D9A84E; --t2-bg: rgba(217,168,78,0.14);
+      --t3: #B39DDB; --t3-bg: rgba(179,157,219,0.14);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #141922; --paper-raised: #1B2129; --paper-well: #10141B;
+    --rule: #2B3242; --rule-strong: #3A4356;
+    --ink: #E7E3D8; --ink-soft: #AFC0DE; --graphite: #9A9890;
+    --accent: #93AAD9; --accent-contrast: #10141B;
+    --good: #7FBB92; --good-bg: rgba(127,187,146,0.15);
+    --bad: #E0776A; --bad-bg: rgba(224,119,106,0.15);
+    --t1: #7FBB92; --t1-bg: rgba(127,187,146,0.13);
+    --t2: #D9A84E; --t2-bg: rgba(217,168,78,0.14);
+    --t3: #B39DDB; --t3-bg: rgba(179,157,219,0.14);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.62;
+    -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 2.6rem 1.4rem 6rem; }
+
+  header.doc {
+    border-bottom: 2px solid var(--rule-strong); padding-bottom: 1.6rem; margin-bottom: 2rem;
+  }
+  header.doc .eyebrow {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--graphite);
+  }
+  header.doc h1 {
+    font-family: var(--font-display); font-weight: 400; font-size: 2rem; line-height: 1.2;
+    margin: 0.5rem 0 0.4rem; text-wrap: balance;
+  }
+  header.doc .sub { color: var(--ink-soft); font-size: 1.02rem; }
+  header.doc .meta { margin-top: 1rem; font-size: 0.85rem; color: var(--graphite); }
+
+  h2 {
+    font-family: var(--font-display); font-weight: 400; font-size: 1.5rem;
+    margin: 3rem 0 0.4rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+    scroll-margin-top: 1rem;
+  }
+  h2 .kicker {
+    display: block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--graphite); margin-bottom: 0.15rem;
+  }
+  h3 {
+    font-family: var(--font-display); font-weight: 400; font-size: 1.16rem;
+    margin: 2rem 0 0.5rem; scroll-margin-top: 1rem;
+  }
+  h4 { font-size: 0.98rem; margin: 1.4rem 0 0.3rem; color: var(--ink-soft); }
+  p { margin: 0.7rem 0; }
+  a { color: var(--ink-soft); }
+  ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+  li { margin: 0.35rem 0; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  .lead { font-size: 1.05rem; color: var(--ink-soft); }
+
+  nav.toc {
+    background: var(--paper-raised); border: 1px solid var(--rule); padding: 1.1rem 1.3rem;
+    margin: 2rem 0; font-size: 0.9rem;
+  }
+  nav.toc p { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--graphite); margin: 0 0 0.6rem; }
+  nav.toc ol { margin: 0; padding-left: 1.2rem; }
+  nav.toc ol ol { margin: 0.2rem 0 0.4rem; }
+  nav.toc a { text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  .callout {
+    border-left: 3px solid var(--accent); background: var(--paper-raised);
+    padding: 0.9rem 1.1rem; margin: 1.2rem 0; font-size: 0.94rem;
+  }
+  .callout.good { border-left-color: var(--good); background: var(--good-bg); }
+  .callout.bad { border-left-color: var(--bad); background: var(--bad-bg); }
+  .callout .lbl {
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em;
+    text-transform: uppercase; display: block; margin-bottom: 0.3rem; color: var(--graphite);
+  }
+
+  .tag {
+    display: inline-block; font-family: var(--font-mono); font-size: 0.66rem;
+    letter-spacing: 0.03em; padding: 0.12rem 0.45rem; border-radius: 2px;
+    border: 1px solid var(--rule-strong); color: var(--graphite); white-space: nowrap;
+  }
+  .tag.t1 { color: var(--t1); border-color: var(--t1); background: var(--t1-bg); }
+  .tag.t2 { color: var(--t2); border-color: var(--t2); background: var(--t2-bg); }
+  .tag.t3 { color: var(--t3); border-color: var(--t3); background: var(--t3-bg); }
+
+  table { border-collapse: collapse; width: 100%; margin: 1.2rem 0; font-size: 0.86rem; }
+  caption { text-align: left; font-size: 0.8rem; color: var(--graphite); margin-bottom: 0.4rem; }
+  th, td { border: 1px solid var(--rule); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+  th { background: var(--paper-well); font-weight: 700; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .bar-row { display: grid; grid-template-columns: 8.5rem 1fr 3.5rem; align-items: center; gap: 0.6rem; margin: 0.35rem 0; font-size: 0.85rem; }
+  .bar-track { background: var(--paper-well); height: 16px; border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; }
+  .bar-fill.t1 { background: var(--t1); }
+  .bar-fill.t2 { background: var(--t2); }
+  .bar-fill.t3 { background: var(--t3); }
+
+  .q {
+    border: 1px solid var(--rule); background: var(--paper-raised);
+    padding: 0.9rem 1.1rem; margin: 1rem 0; font-size: 0.9rem;
+  }
+  .q .qid { font-family: var(--font-mono); font-size: 0.72rem; color: var(--graphite); }
+  .q .stem { margin: 0.4rem 0 0.6rem; }
+  .q .opt { margin: 0.25rem 0; padding-left: 1.4rem; text-indent: -1.4rem; }
+  .q .opt .k { font-family: var(--font-mono); font-weight: 700; }
+  .q .opt.ok { color: var(--good); }
+  .q .opt.ok .k::after { content: " ✓"; }
+  .q .why { margin-top: 0.6rem; font-size: 0.85rem; color: var(--ink-soft); border-top: 1px dashed var(--rule-strong); padding-top: 0.5rem; }
+
+  .theme-toggle {
+    position: fixed; top: 0.8rem; right: 0.8rem; z-index: 10;
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em;
+    background: var(--paper-raised); color: var(--ink-soft);
+    border: 1px solid var(--rule-strong); padding: 0.35rem 0.6rem; cursor: pointer;
+  }
+
+  footer.doc { margin-top: 4rem; padding-top: 1.4rem; border-top: 2px solid var(--rule-strong);
+    font-size: 0.82rem; color: var(--graphite); }
+
+  @media print {
+    .theme-toggle { display: none; }
+    body { background: #fff; color: #000; }
+    .wrap { max-width: none; padding: 0; }
+    h2 { break-after: avoid; }
+    .q, .callout, table { break-inside: avoid; }
+  }
+  @media (max-width: 620px) {
+    .bar-row { grid-template-columns: 6rem 1fr 2.6rem; }
+  }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" type="button">tema: auto</button>
+<div class="wrap">
+
+<header class="doc">
+  <span class="eyebrow">Material de revisão · uso didático</span>
+  <h1>O que as duas últimas provas cobraram — e como elas cobram</h1>
+  <p class="sub">Revisão dirigida do componente específico de <strong>Artes Visuais (Licenciatura)</strong> a partir do <strong>ENADE 2024</strong> e da <strong>PND 2025</strong> (Prova Nacional Docente), organizada pelas três categorias temáticas do nosso codificador de corpus.</p>
+  <p class="meta">
+    Base empírica: 37 itens do ENADE 2024 (componente específico, PV1, alternativas A–D) + 1 questão discursiva &nbsp;·&nbsp;
+    50 itens da PND 2025 (Prova 1, blocos de 2–3 questões por obra/texto). Total: 87 itens com enunciado, alternativas e gabarito conferidos.
+    Enunciados oficiais são documentos públicos do INEP; aqui são citados de forma abreviada, para estudo.
+  </p>
+</header>
+
+<p class="lead">Este material tem dois objetivos. Primeiro, mapear <em>o conhecimento</em> que aparece nas provas, dividido pelas categorias que construímos. Segundo — e é a parte que mais rende ponto na prova — descrever <em>a gramática do item</em>: como costuma ser redigida a alternativa correta e como costumam ser redigidas as falsas.</p>
+
+<nav class="toc">
+  <p>Sumário</p>
+  <ol>
+    <li><a href="#panorama">Panorama das duas provas</a>
+      <ol>
+        <li><a href="#formato">Formato e “assinatura” de cada edição</a></li>
+        <li><a href="#distribuicao">Distribuição por categoria</a></li>
+      </ol>
+    </li>
+    <li><a href="#categorias">As categorias e o que caiu em cada uma</a></li>
+    <li><a href="#t1">Categoria 1 — Ensino, Metodologias e Avaliação</a></li>
+    <li><a href="#t2">Categoria 2 — Teoria da Arte e da Imagem; Criação, Percepção e Interpretação</a></li>
+    <li><a href="#t3">Categoria 3 — Representação, Identidade e Diversidade</a></li>
+    <li><a href="#transversais">Eixos transversais (atravessam as três categorias)</a></li>
+    <li><a href="#analise">Análise geral — a anatomia do item</a>
+      <ol>
+        <li><a href="#correta">Como é a alternativa correta</a></li>
+        <li><a href="#falsas">Como são as alternativas falsas</a></li>
+        <li><a href="#checklist">Checklist de decisão na dúvida</a></li>
+      </ol>
+    </li>
+    <li><a href="#apendice">Apêndice — obras, artistas e textos por edição</a></li>
+  </ol>
+</nav>
+
+<h2 id="panorama"><span class="kicker">Parte 1</span>Panorama das duas provas</h2>
+
+<p>ENADE 2024 e PND 2025 avaliam a mesma coisa — a formação do <strong>professor</strong> de Artes Visuais — mas são instrumentos diferentes. Em 2025 o ENADE das licenciaturas foi substituído pela <strong>Prova Nacional Docente (PND)</strong>, que também funciona como porta de entrada para concursos. Isso muda o tom dos itens, como se vê abaixo.</p>
+
+<h3 id="formato">Formato e “assinatura” de cada edição</h3>
+
+<table>
+  <caption>Comparação de formato entre as duas edições</caption>
+  <thead>
+    <tr><th></th><th>ENADE 2024</th><th>PND 2025</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Alternativas</strong></td><td>4 (A–D)</td><td>4 (A–D); a letra E aparece vazia no caderno</td></tr>
+    <tr><td><strong>Organização</strong></td><td>Itens independentes</td><td>Blocos de 2–3 itens sobre a mesma obra/texto-base (Zina Aita, Torres García, Aline Motta, Silvana Mendes/Mignard, Aníbal López, Chiharu Shiota, Renata Felinto, Uýra, Eduardo Srur, mediação em museu, patrimônio urbano, projeto intergeracional)</td></tr>
+    <tr><td><strong>Estrutura típica do enunciado</strong></td><td>“Um professor de Arte planejou… / Diante dessa situação, assinale a opção que…”. Situação-problema da prática docente, quase sempre a partir de uma obra.</td><td>Igual, e ainda mais padronizado: pede <em>objetivo de aprendizagem</em>, <em>estratégia do planejamento</em>, <em>proposta de atividade</em> ou <em>instrumento de avaliação</em> para a obra apresentada.</td></tr>
+    <tr><td><strong>Formato dominante</strong></td><td>Híbrida (obra + didática) e “pedagogia aplicada”. “Conteúdo puro” é raro (Agnes Denes, Ruiz Durand, Duchamp, Pedraza).</td><td>Quase tudo híbrido. “Conteúdo puro” praticamente só no item de NFT. Nenhum item é só história/teoria da arte sem professor em cena.</td></tr>
+    <tr><td><strong>Nível cognitivo (Bloom) predominante</strong></td><td>Aplicar / Analisar; alguns Avaliar</td><td>Aplicar / Compreender; poucos Avaliar (bloco Aníbal López e um item de Shiota)</td></tr>
+    <tr><td><strong>Discursiva</strong></td><td>Plano de aula (60 min) + justificativa (máx. 30 linhas): arte urbana / mural coletivo / “A parede é coisa política por excelência” / mote: bullying e diversidade</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="lbl">A regra de ouro das duas provas</span>
+  Não existe item que peça só “o que é isto na história da arte”. Toda questão é, no fundo, <strong>“você sabe transformar isto numa boa aula?”</strong>. Mesmo quando a obra é o centro, o que se avalia é a <em>decisão didática</em> sobre ela.
+</div>
+
+<h3 id="distribuicao">Distribuição por categoria</h3>
+
+<p>Classificação orientada pelas três categorias do anexo (<em>revisao_corpus_codificador.html</em>). Vários itens são ambivalentes — foram alocados pela categoria do <strong>conhecimento decisivo</strong> para acertar, não pelo assunto da imagem. Números aproximados.</p>
+
+<div class="bar-row"><span>Categoria 1</span><span class="bar-track"><span class="bar-fill t1" style="width:38%"></span></span><span>≈ 33</span></div>
+<div class="bar-row"><span>Categoria 2</span><span class="bar-track"><span class="bar-fill t2" style="width:39%"></span></span><span>≈ 34</span></div>
+<div class="bar-row"><span>Categoria 3</span><span class="bar-track"><span class="bar-fill t3" style="width:23%"></span></span><span>≈ 20</span></div>
+
+<p style="font-size:0.85rem;color:var(--graphite)">As três categorias têm peso parecido, com leve predomínio das duas primeiras. Mas <strong>a Categoria 1 é a que decide mais itens</strong>: mesmo questões “de Categoria 2 ou 3” costumam ser ganhas ou perdidas na parte pedagógica da alternativa (metodologia ativa, avaliação processual, mediação dialógica).</p>
+
+<h2 id="categorias"><span class="kicker">Parte 2</span>As categorias e o que caiu em cada uma</h2>
+
+<p>Cada categoria abaixo traz: (a) os <strong>subtemas</strong> do anexo que apareceram; (b) os <strong>conceitos e autores</strong> que você precisa dominar; (c) <strong>como o tema foi cobrado</strong> em 2024–2025, com itens de referência.</p>
+
+<!-- ============ CATEGORIA 1 ============ -->
+<h2 id="t1"><span class="kicker">Categoria 1 · <span class="tag t1">T1</span></span>Ensino, Metodologias e Avaliação do Ensino</h2>
+
+<p class="lead">É a espinha dorsal das provas. Se você tiver que priorizar um bloco de estudo, é este.</p>
+
+<h3>1.1 Fundamentos e epistemologia do ensino de arte</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Tendências pedagógicas no ensino da arte</strong> (Alvarenga): da <em>tradicional / prática-utilitária</em> (destreza técnica, desenho de observação, cópia de modelos e moldes de gesso) à <em>livre-expressão / expressivista</em> (afeto, experimentação de materiais) até as <em>contemporâneas</em> (crítica, cultural, pós-moderna). Saber o que cada uma entende por “criar” e como cada uma avalia.</li>
+  <li><strong>Vigotski</strong>: imaginação e criatividade como <em>combinação</em> do que já foi vivido; criatividade não é rara nem inata; depende de <em>ambiente que estimule a experienciação</em> e de <em>mediação social</em>. A rotina escolar rígida empobrece a criação.</li>
+  <li>Processo de criação e reflexão em arte como algo <strong>não linear e imprevisível</strong>, que combina experimentação artística e História da Arte (Loyola &amp; Pimentel; laboratório-ateliê).</li>
+  <li>Abordagem Triangular (Ana Mae Barbosa): <em>ler / fazer / contextualizar</em> — articular forma e contexto sociocultural, não escolher um polo.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025 abriu um bloco inteiro sobre <strong>dois planos de ensino em confronto</strong> (utilitário × livre-expressão) e o tipo de avaliação que cada um pede.</li>
+  <li>Dois itens sobre Vigotski (2025): a resposta certa sempre foi <em>experimentação + colaboração + múltiplas linguagens</em>, nunca “relaxamento/meditação para desbloquear” nem “reproduzir obras famosas”.</li>
+  <li>ENADE 2024: “os processos de criação e reflexão em Arte necessitam de uma abordagem flexível, combinando experimentação e História da Arte, reconhecendo a imprevisibilidade da criação”.</li>
+</ul>
+
+<h3>1.2 Metodologias e abordagens didáticas · interculturalidade e interdisciplinaridade</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Metodologias ativas</strong>: projeto de trabalho / pedagogia de projetos (com dimensão política, não “metodologia pronta”), estudo teórico-prático, resolução de problemas, criação coletiva.</li>
+  <li><strong>Protagonismo discente</strong>: o estudante no centro, como pesquisador, curador, produtor — o professor como mediador.</li>
+  <li><strong>Educação intercultural</strong>: diversidade como <em>recurso e força</em>; diálogo entre culturas <em>sem hierarquia</em>; a arte contemporânea como ponte entre a origem cultural do aluno e a aprendizagem. Distinga de <em>multiculturalismo folclórico</em> (celebração superficial, “dia de”).</li>
+  <li><strong>Interdisciplinaridade / transdisciplinaridade</strong>: integração real de saberes, e não uma disciplina servindo de ilustração para a outra.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>ENADE 2024 tem <em>vários</em> itens de proposta intercultural (Q28, Q37): a certa fala em “respeito e valorização da diversidade” e “processo coletivo que problematiza a autoria”; as erradas trazem “história da arte europeia como referência”, “cultura de origem primitiva”, ou “máscaras africanas para o Dia da Consciência Negra”.</li>
+  <li>PND 2025, Zina Aita: a estratégia que “articula a abordagem triangular” é a que relaciona <em>contrastes formais</em> E <em>condições de trabalho na época</em> — forma + contexto juntos.</li>
+  <li>Repositório digital de cultura afro-brasileira/quilombola (2024 Q31): a resposta certa é a que “posiciona os estudantes como protagonistas”.</li>
+</ul>
+
+<h3>1.3 Avaliação em Artes Visuais</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Avaliação formativa, processual, diagnóstica e emancipadora</strong> × avaliação <em>classificatória / somativa</em>.</li>
+  <li>Instrumentos coerentes com processo: <strong>portfólio</strong>, <strong>diário de bordo</strong> (com narrativa visual), <strong>observação</strong> do percurso, <strong>relatório individual</strong> reflexivo, <strong>autoavaliação</strong>, <strong>critérios de avaliação construídos com os estudantes</strong>.</li>
+  <li>Critérios que respeitam a desigualdade de recursos: avaliar <em>criatividade, investigação e processo</em>, não a qualidade técnica do equipamento disponível.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>É um dos assuntos <strong>mais frequentes</strong>. 2024: Azurdia → “diagnóstica e emancipadora + portfólio”; feira cultural → “relatório individual”; cinema experimental de Brakhage → avaliar “criatividade e inovação”, não “qualidade técnica da edição”.</li>
+  <li>2025: bloco Uýra e bloco Aníbal López → “critérios construídos com os estudantes, considerando suas escolhas criativas e seus processos de pesquisa”; patrimônio urbano → “diário de bordo com narrativa visual”.</li>
+  <li>Distrator recorrente: <em>prova objetiva</em>, <em>prova escrita sobre a biografia do artista</em>, <em>roteiro técnico único comum a toda a turma</em>, “métodos convencionais são mais efetivos”.</li>
+</ul>
+
+<h3>1.4 Formação e pesquisa docente</h3>
+<p>Menos frequente como item isolado, mas aparece na chave de correção: o professor como <strong>professor-pesquisador</strong>, que estuda a novidade trazida pelos alunos antes de planejar (PND 2025, “Italian Brainrot” / Hugo Ball), e que fundamenta suas escolhas em <strong>dados e referências</strong> (Aníbal López, “fundamentando-se em dados científicos”).</p>
+
+<h3>1.5 Legislação, políticas e currículo</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>BNCC — Arte</strong>: seis dimensões do conhecimento — <em>criação, crítica, estesia, expressão, fruição, reflexão</em> — que devem aparecer <strong>integradas</strong>, não isoladas. Habilidades codificadas (ex.: <strong>EF69AR31</strong> — relacionar práticas artísticas às dimensões social, cultural, política, histórica, econômica, estética e ética).</li>
+  <li><strong>Lei nº 15.100/2025 (“Lei do Celular”)</strong>: restringe o celular na Educação Básica, <em>exceto</em> com finalidade pedagógica planejada pelo professor. O desafio é o uso crítico e expressivo, não a proibição nem o uso instrumental raso.</li>
+  <li><strong>Decreto nº 11.784/2023</strong>: Brasil reconhece oficialmente a cultura hip-hop (música, dança, grafite, modo de vida) como cultura nacional.</li>
+  <li>Panorama histórico (para leitura de alternativas): Lei 5.692/1971 e a Educação Artística; Lei 13.278/2016 (as quatro linguagens); Leis 10.639/2003 e 11.645/2008 (ensino de história e cultura afro-brasileira e indígena).</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>2024: BNCC — dimensões do conhecimento (identificar qual grupo de alunos integrou criação + crítica + estesia + fruição + reflexão).</li>
+  <li>2025: bloco sobre EF69AR31 num <strong>projeto intergeracional</strong> (estudantes do 9º ano com idosos em casa de repouso) — resposta certa: trabalho coletivo/colaborativo e diálogo intergeracional; erradas: “protagonismo dos estudantes em detrimento das experiências dos idosos”, “reforçar limitações dos idosos”.</li>
+  <li>2025: Lei do Celular → produção de vídeos de arte pelos alunos + reflexão sobre autoria e impacto da imagem digital.</li>
+</ul>
+
+<h3>1.6 Espaços, mediação e curadoria educativa</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Mediação dialógica</strong> × mediação como “tradução” ou “explicação” da obra. O saber não está concentrado no educador/instituição; o visitante/estudante <em>constrói sentidos</em>; há <em>múltiplas leituras legítimas</em>.</li>
+  <li><strong>Luis Camnitzer</strong>: recusa o “a obra fala por si mesma”; a obra é <em>veículo de comunicação</em> entre artista e público; a mediação existe para uma “comunicação inteligente”, com critérios que variam conforme a obra.</li>
+  <li>Curadoria educativa <strong>com</strong> os estudantes (definição coletiva de tema, espaço e obras, em diálogo com artistas), não <strong>para</strong> os estudantes.</li>
+  <li>Espaços não formais (museu, centro cultural, metaverso, tour virtual) como <em>fonte de saber</em>, com o aluno como agente — não como passeio ilustrativo seguido de prova.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025 dedicou um <strong>bloco de 3 itens</strong> ao modelo dialógico de mediação em museus — todas as respostas certas giram em torno de “protagonismo do visitante” e “construção coletiva de significados”; todos os distratores falam em “padronização”, “controle”, “uma única forma certa de interpretar”, “dados técnicos: título, autor, data, técnica”.</li>
+  <li>2024: Camnitzer (curadoria e mediação feitas pelos estudantes em diálogo com o professor e os artistas); curador de galeria (mediação cultural como parte essencial do processo curatorial → oficinas e palestras com os artistas).</li>
+</ul>
+
+<h3>1.7 Produção pedagógica escolar</h3>
+<p>A “visualidade da escola” entra como cenário: o <strong>Painel da Diversidade</strong> pintado de cinza pela direção (discursiva 2024) — o muro/parede da escola como espaço político e como conteúdo. A produção do aluno deve ser tratada como obra, exposta e discutida, não como enfeite de mural.</p>
+
+<h3>1.8 Educação inclusiva</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>AEE (Atendimento Educacional Especializado)</strong> e <strong>Altas Habilidades/Superdotação</strong>: ambiente diferenciado, oficinas de exploração de materiais, técnicas e linguagens em produções colaborativas e individuais — não reprodução de modelos.</li>
+  <li>Acessibilidade sensorial e <strong>daltonismo</strong> nas aulas de arte (referência a Van Gogh): propor atividades em escala de cinza, luz/sombra, tons e contrastes; recusar soluções que dependam de “colegas que enxergam as cores corrigirem”.</li>
+  <li>Museus multissensoriais; educação bilíngue/Libras; diversidade como componente da inclusão “no sentido mais amplo”.</li>
+</ul>
+
+<!-- ============ CATEGORIA 2 ============ -->
+<h2 id="t2"><span class="kicker">Categoria 2 · <span class="tag t2">T2</span></span>Teoria da Arte e da Imagem; Processos de Criação, Percepção e Interpretação</h2>
+
+<h3>2.1 Teoria da arte, percepção e linguagem visual</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Leitura de imagem</strong> e <strong>experiência estética</strong>: observação sensível, diálogo interpretativo, expressão simbólica; a estesia como dimensão (não “percepção visual” apenas, nem “manipulação de materiais”).</li>
+  <li><strong>Tema, forma e conteúdo</strong> (Ocvirk): o quê / como / porquê, <em>ligados de modo inseparável</em>. Trabalhar em aula = analisar como se interligam.</li>
+  <li>Elementos e recursos da linguagem visual: <strong>textura</strong> (Carlos Vergara, monotipia/decalque), ritmo, movimento, composição, cor; pinceladas gestuais.</li>
+  <li>Física e composição como linguagem visual (jogo <em>The Bridge</em>, estética de Escher): gravidade e forças físicas influenciando a composição.</li>
+  <li>História da arte / representação do corpo: proporção e simetria gregas; anatomia e escorço (Michelangelo); mas em aula isso vira <em>articulação de teoria e prática</em>, não aula expositiva de cânone.</li>
+  <li><strong>Ready-made</strong> (Duchamp, <em>Bottle Rack</em>): qualquer objeto pode ser arte se escolhido pelo artista e apresentado em contexto artístico — deslocamento, não habilidade técnica.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025, Chiharu Shiota (<em>The Key in the Hand</em>): três itens sobre percepção e experiência estética — a resposta certa é sempre “observação sensível + diálogo interpretativo + expressão simbólica”, e num item “promoveu a experiência estética” (não “priorizou a percepção visual” nem “habilidades motoras”).</li>
+  <li>2024: Ocvirk (analisar a interligação tema–forma–conteúdo); Vergara (propor composições de textura com recursos da natureza); Duchamp (o que os alunos devem <em>compreender</em> sobre ready-mades).</li>
+</ul>
+
+<h3>2.2 Processos de criação e prática artística · produções híbridas</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Ruptura dos suportes tradicionais</strong>: livro de artista, vidro gravado (Nuno Ramos, <em>Un Coup de Dés</em>), materiais não convencionais, experimentação de formas e volumes com o que há.</li>
+  <li><strong>Assemblage</strong> (Betye Saar): <em>ressignificar objetos</em> pela carga de sentido que carregam e pela relação entre eles — não é “reuso sustentável de material” nem “pintar outras superfícies”.</li>
+  <li><strong>Colagem / fotomontagem</strong> e o gesto manual (recortar, sobrepor, fotocopiar, intervir) — diálogo com o dadaísmo.</li>
+  <li><strong>Práticas híbridas contemporâneas</strong> (Aline Motta): cinema + fotografia + performance + escrita para investigar memória, pertencimento, identidade; “arquivo” reorganizado; escavação sensível.</li>
+  <li>Criação <strong>coletiva</strong> e <strong>autoral</strong> ligada à experiência de vida do estudante.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025, Aline Motta: bloco de 3 itens — respostas certas sempre em torno de “produções autorais em suportes híbridos” e “investigações sobre as próprias memórias traduzidas em vídeo, poesia e fotografia”.</li>
+  <li>2024: Betye Saar (assemblage como ressignificação); Menna Barreto / <em>Restauro</em> (a coleta de sons pelos alunos como elemento legítimo da arte contemporânea).</li>
+</ul>
+
+<h3>2.3 Visualidade contemporânea e cultura visual do cotidiano</h3>
+<h4>Domine</h4>
+<ul>
+  <li>Cultura visual das <strong>redes sociais</strong>: filtros, padrões estéticos, avatares, corpos reais × corpos virtuais; o projeto crítico investiga e problematiza essas estéticas — não promove “workshop de maquiagem” nem “concurso de beleza”.</li>
+  <li>Estéticas do absurdo e do meme (“Italian Brainrot”, IA generativa) em diálogo com o <strong>dadaísmo</strong> (poema fonético <em>Karawane</em>, Hugo Ball): aproximar produção contemporânea e modernista.</li>
+</ul>
+
+<h3>2.4 Tecnologia, mídia e comunicação · arte, ciência e tecnologia</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>TICs no ensino de arte</strong>: como <em>linguagem e meio de criação</em> (não substituem pintura/desenho/escultura; não “reforçam o protagonismo do professor”; ajudam a pesquisar, planejar, criar e ir além do tempo/espaço da escola).</li>
+  <li>Arte + ciência + tecnologia: explorar a <strong>interação humano–máquina</strong> com autonomia criativa — não “adquirir tecnologia de ponta” nem “focar em aspectos técnicos”.</li>
+  <li>Espaço <strong>maker</strong>: filosofia de aprendizagem (experimentação, colaboração, erro), integrando materiais recicláveis, impressão 3D, pintura manual.</li>
+  <li>Metaverso / realidade virtual / tour 360° como ambiente de exposição e mediação de acervos.</li>
+  <li>Cinema experimental (Stan Brakhage): abstração, narrativa não linear, pintura direta na película.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>2024: dois itens sobre TICs (um como linguagem artística — <em>Restauro</em>; outro como ferramenta ampla de planejamento e pesquisa); Van Gogh em RV (interdisciplinar Arte–Tecnologia–História — a resposta certa integra as três, via cartas do artista + eventos históricos); galeria no metaverso.</li>
+  <li>2025: espaço maker (2 itens), Vigotski + tecnologias, Lei do Celular.</li>
+</ul>
+
+<h3>2.5 Arte, trabalho e sistema cultural · mercado</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Sistema da arte</strong>: galerias, crítica, curadores, museus, revistas como <em>mediadores</em> entre artista e público; vínculo com a economia; vulnerabilidade material do artista.</li>
+  <li>“O que é arte / quando é arte / quem diz que é” (Gonzalo Pedraza): a validação é social; a experiência estética se amplia quando todos participam, especialistas ou não.</li>
+  <li><strong>NFT / blockchain</strong>: autentica obra digital, permite <em>comércio direto</em> artista–colecionador, reduz intermediários e amplia acesso ao mercado (sem eliminar desigualdades).</li>
+  <li>Ação cultural na escola: simular circuitos (exposição de obras estudantis com “compra e venda” encenada, articulada com a comunidade).</li>
+</ul>
+
+<h3>2.6 Arte, poder e política · artivismo · narrativas contra-hegemônicas</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Artivismo</strong> (Frente 3 de Fevereiro, <em>Bandeiras</em>): a arte no espaço público como mobilização; em aula, ampliar repertório com artistas que tratam de questões sociais — não “formar grêmio” nem “campeonato de esportes”.</li>
+  <li><strong>Cartaz político e “pop achorado”</strong> (Jesús Ruiz Durand, reforma agrária no Peru): cores vibrantes e figuras que capturam energia e esperança dos camponeses indígenas.</li>
+  <li><strong>Narrativas hegemônicas × contra-hegemônicas</strong> (Torres García, <em>América Invertida</em>; Silvana Mendes × Pierre Mignard): analisar contextos sociais e implicações políticas; problematizar as narrativas dominantes e os critérios estéticos eurocêntricos.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025: blocos Torres García e Silvana Mendes/Mignard — respostas certas em torno de “análise de contextos sociais e implicações políticas”, “problematização das narrativas dominantes”, “temas identitários e políticos na contemporaneidade”.</li>
+  <li>2024: <em>Bandeiras</em> (artivismo); Ruiz Durand.</li>
+</ul>
+
+<h3>2.7 Arte, ambiente e sociedade</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Land Art e crítica ambiental</strong> (Agnes Denes, <em>Wheatfield — A Confrontation</em>): a leitura correta é <em>crítica</em> — denuncia a dominação do ambiente natural pela expansão urbana e seus impactos. Não é “celebração da agricultura urbana” nem “equilíbrio harmônico entre natureza e cidade”.</li>
+  <li><strong>Fotografia socioambiental</strong> (Lalo de Almeida, Pantanal): a imagem como <em>posição</em> diante da questão social, não só registro nem “imagem agradável aos olhos”.</li>
+  <li><strong>Intervenção urbana ambiental</strong> (Eduardo Srur): relacionar arte urbana e meio ambiente; produção de tintas com terras e resinas, carvão vegetal de galhos secos — material do próprio ambiente.</li>
+</ul>
+
+<!-- ============ CATEGORIA 3 ============ -->
+<h2 id="t3"><span class="kicker">Categoria 3 · <span class="tag t3">T3</span></span>Representação, Identidade e Diversidade</h2>
+
+<h3>3.1 Outras matrizes culturais e a crítica ao eurocentrismo</h3>
+<h4>Domine</h4>
+<ul>
+  <li>Visualidades de origem europeia como <strong>objeto de análise crítica</strong>, não como norma: confrontar a pintura acadêmica/retrato de corte (Pierre Mignard) com a produção contemporânea que a desconstrói (Silvana Mendes).</li>
+  <li>A <strong>inversão do mapa</strong> (Torres García) como crítica à centralidade europeia e proposta de nova centralidade para a América do Sul; cartografia + memória + identidade.</li>
+</ul>
+
+<h3>3.2 Matrizes culturais afro-brasileiras e quilombolas</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Rosana Paulino</strong> (<em>Parede da Memória</em>): memória e saberes afro-brasileiros, processos artísticos coletivos, ensaios visuais em tecido, instalação.</li>
+  <li><strong>Renata Felinto</strong> (<em>Axexê da negra</em> — o “enterro” de <em>A Negra</em>, de Tarsila): revisão crítica do modernismo e da <strong>Antropofagia</strong>; representação e autorrepresentação de mulheres negras; performance que problematiza estereótipos e colonização/escravização.</li>
+  <li><strong>Sidney Amaral</strong> (<em>Banzo</em>): a imagem como disparadora de sequência interdisciplinar com leituras críticas em grupo — não “aula sobre o racismo” sozinha, nem releitura técnica.</li>
+  <li><strong>Angélica Dass</strong> (<em>Humanae</em>): diversidade do povo brasileiro via apreciação da obra + análise de elementos visuais + criação coletiva (não “categorizar cores de pele”).</li>
+  <li>Repositórios e coleções digitais de cultura afro-brasileira e quilombola com o aluno como catalogador/protagonista; hip-hop (Decreto 2023) como expressão crítica sobre questões sociais, raciais e políticas.</li>
+</ul>
+<h4>Como caiu</h4>
+<ul>
+  <li>PND 2025: bloco Renata Felinto (2 itens) e item Sidney Amaral; ENADE 2024: Rosana Paulino, Humanae, hip-hop, repositório digital.</li>
+</ul>
+
+<h3>3.3 Matrizes culturais indígenas</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Uýra Sodoma</strong> (“a árvore que anda”): performance indígena e <em>drag</em>; pertencimento, meio ambiente, ancestralidade, corpo dissidente, resistência cultural; denúncia de apagamentos. Em aula: apresentar vídeos/imagens e propor <em>performances autorais</em> sobre cultura e identidade; intervenções visuais no espaço escolar.</li>
+  <li>Arte indígena <strong>contemporânea</strong> (não “arte indígena” genérica/etnográfica); Sueli Maxakali e processos coletivos que problematizam a autoria.</li>
+</ul>
+
+<h3>3.4 Gênero e sexualidade</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Nan Goldin</strong> (<em>The Other Side</em>): retratos de amigas trans, travestis e drag queens; contestação da binariedade. Em aula: produção visual <em>a partir das narrativas de pessoas trans</em> — não “classificar os corpos”, não “palestra sobre diferenças biológicas entre os sexos”.</li>
+  <li><strong>Ana Raylander Mártis dos Anjos</strong> (<em>Milissegundos nos Trapos de Mundo</em>): o instante decisivo de uma vida trans em contexto de violência; leitura das imagens + proposta artística sobre temas que os próprios alunos considerem importantes.</li>
+  <li>Interseção gênero + identidade indígena (Uýra); gênero + desconstrução de narrativas eurocentradas (Silvana Mendes/Mignard → “identidades marginalizadas e padrões estéticos excludentes”).</li>
+</ul>
+
+<h3>3.5 Identidade cultural, patrimônio e cultura popular</h3>
+<h4>Domine</h4>
+<ul>
+  <li><strong>Patrimônio material × imaterial</strong>: valorizar <em>ambos</em>, ligados à identidade cultural; pesquisar e apresentar um exemplo de cada, explicando a importância dos dois (2024 Q29).</li>
+  <li><strong>Patrimônio cultural urbano</strong> e território (PND 2025): o aluno como <em>pesquisador do território</em>; levantamento do estado dos bens públicos para subsidiar reflexão e ação de intervenção; identidades e territorialidades em narrativas visuais e históricas; avaliação por <strong>diário de bordo</strong>.</li>
+  <li>Escola como lugar de resistência; conhecimento do currículo em diálogo com o repertório da experiência vivida.</li>
+</ul>
+
+<!-- ============ TRANSVERSAIS ============ -->
+<h2 id="transversais"><span class="kicker">Parte 3</span>Eixos transversais</h2>
+<p>Alguns fios atravessam as três categorias e reaparecem edição após edição. Reconhecê-los ajuda a antecipar a resposta:</p>
+<ul>
+  <li><strong>Decolonialidade e crítica ao cânone</strong> — europeu como objeto de análise, não como medida.</li>
+  <li><strong>Arte contemporânea brasileira e latino-americana</strong> — o repertório de artistas é majoritariamente vivo, brasileiro/latino-americano, mulher, negro, indígena, LGBTQIA+.</li>
+  <li><strong>Interdisciplinaridade</strong> — quase toda situação envolve outro componente (História, Ciências, Sociologia, Língua Portuguesa).</li>
+  <li><strong>Tecnologia como linguagem</strong> — TIC, IA, NFT, metaverso, RV, celular: sempre como meio expressivo e objeto de reflexão crítica, nunca como fim.</li>
+  <li><strong>Avaliação processual</strong> — entra como “pegadinha” mesmo em itens que não são “sobre avaliação”.</li>
+  <li><strong>Protagonismo e autonomia do estudante</strong> — o critério que, na dúvida, decide a alternativa.</li>
+</ul>
+
+<!-- ============ ANÁLISE ============ -->
+<h2 id="analise"><span class="kicker">Parte 4 — a mais importante</span>A anatomia do item: resposta certa × alternativas falsas</h2>
+
+<p class="lead">As duas provas têm um padrão de redação tão estável que dá para acertar muitos itens sem reconhecer a obra, só lendo <em>como</em> as alternativas estão escritas.</p>
+
+<h3 id="correta">Como é a alternativa correta</h3>
+
+<p>A alternativa correta quase sempre reúne <strong>vários</strong> destes traços:</p>
+
+<ol>
+  <li><strong>Põe o estudante no centro.</strong> Ele investiga, cria, cataloga, curadoria, pesquisa o território, constrói critérios. Palavras-âncora: <em>protagonismo, autonomia, autoral, produção de sentidos, experiência do estudante como ponto de partida</em>.</li>
+  <li><strong>É dialógica e coletiva.</strong> Roda de conversa, leitura em grupo, construção coletiva de significados, criação colaborativa, critérios negociados com a turma.</li>
+  <li><strong>Articula polos em vez de escolher um.</strong> Forma <em>e</em> contexto; teoria <em>e</em> prática; experimentação <em>e</em> História da Arte; individual <em>e</em> coletivo. Frequentemente nomeia <em>dois ou três</em> componentes ligados (“X, Y e Z”).</li>
+  <li><strong>Prioriza o processo.</strong> Avaliação formativa; portfólio, diário de bordo, observação, relatório reflexivo, autoavaliação.</li>
+  <li><strong>Mantém a dimensão artística viva.</strong> Mesmo integrando outra disciplina ou um tema social, continua havendo <em>criação em arte</em>, <em>leitura de imagem</em>, <em>linguagem visual</em> — a aula de arte não vira aula de outra coisa.</li>
+  <li><strong>Assume a crítica.</strong> Para obra engajada, a leitura correta é a que <em>problematiza, denuncia, tensiona</em> — nunca a que concilia ou neutraliza.</li>
+  <li><strong>Usa linguagem inclusiva e não hierárquica.</strong> “Respeito e valorização da diversidade”, “sem hierarquizar”, “ambos”, “diferentes”.</li>
+  <li><strong>Costuma ser a alternativa mais longa e mais qualificada</strong> — porque precisa descrever a articulação inteira. (Útil como desempate, não como regra cega.)</li>
+</ol>
+
+<div class="q">
+  <div class="qid">PND 2025 · Zina Aita, <em>Homens trabalhando</em> · leitura de imagem / abordagem triangular</div>
+  <p class="stem"><strong>Enunciado (resumido):</strong> qual estratégia articula a abordagem triangular para a leitura dessa imagem?</p>
+  <p class="opt ok"><span class="k">A</span> destacar os contrastes formais da composição <em>e</em> propor análise das condições de trabalho na época da artista, relacionando forma e contexto sociocultural</p>
+  <p class="opt"><span class="k">B</span> identificar e <em>copiar</em> os elementos visuais predominantes, priorizando o desenvolvimento técnico do desenho</p>
+  <p class="opt"><span class="k">C</span> conduzir a leitura só pelas sensações, <em>ignorando</em> elementos formais e aspectos históricos</p>
+  <p class="opt"><span class="k">D</span> produção livre inspirada na obra, <em>sem mediação</em> do conteúdo histórico</p>
+  <p class="why">A correta articula forma + contexto (traço 3). Cada distrator isola um polo e o absolutiza: só técnica (B), só sensação (C), só expressão sem mediação (D). Este item é um resumo de toda a lógica da prova.</p>
+</div>
+
+<div class="q">
+  <div class="qid">ENADE 2024 · Agnes Denes, <em>Wheatfield — A Confrontation</em> · Land Art</div>
+  <p class="stem"><strong>Enunciado (resumido):</strong> é correto afirmar que essa obra…</p>
+  <p class="opt ok"><span class="k">A</span> representa a dominação do ambiente natural pelo desenvolvimento urbano, desafiando o espectador a refletir sobre os impactos ambientais e sociais da expansão urbana</p>
+  <p class="opt"><span class="k">B</span> celebra a presença de áreas agrícolas nas metrópoles e a agricultura urbana</p>
+  <p class="opt"><span class="k">C</span> promove a ideia de sustentabilidade urbana pela integração de elementos naturais</p>
+  <p class="opt"><span class="k">D</span> reflete a tensão natureza–cidade, destacando o <em>equilíbrio</em> entre ambos</p>
+  <p class="why">A obra é uma <em>confrontação</em>. A correta mantém a crítica (traço 6). B, C e D suavizam: “celebra”, “promove”, “equilíbrio harmônico” — o distrator típico da obra engajada é a leitura conciliadora.</p>
+</div>
+
+<div class="q">
+  <div class="qid">PND 2025 · Aníbal López, <em>Una tonelada de libros…</em> · metodologia e avaliação</div>
+  <p class="stem"><strong>Enunciado (resumido):</strong> ao adotar uma metodologia que acolhe as leituras dos estudantes e constrói com eles os critérios de avaliação, a professora…</p>
+  <p class="opt ok"><span class="k">C</span> reconhece a experiência individual dos estudantes como ponto de partida para reflexões críticas e produção de sentidos</p>
+  <p class="opt"><span class="k">A</span> prioriza a correção técnica das análises com base em referências historiográficas</p>
+  <p class="opt"><span class="k">B</span> valoriza a memorização de dados objetivos — nome do artista, título, contexto histórico</p>
+  <p class="opt"><span class="k">D</span> alinha as interpretações à intenção original do artista, determinando leituras corretas e incorretas</p>
+  <p class="why">Correta = protagonismo + produção de sentidos (traços 1 e 5). Distratores: reducionismo técnico (A), memorização (B), leitura única autorizada (D).</p>
+</div>
+
+<h3 id="falsas">Como são as alternativas falsas</h3>
+
+<p>Os distratores das duas provas se repartem em poucos moldes. Aprenda a farejá-los:</p>
+
+<h4>a) A tradicional disfarçada</h4>
+<p>Aula expositiva, palestra, seminário, “explicar a obra”, prova objetiva, prova escrita, memorização de dados (autor, título, data, técnica, biografia), releitura/reprodução seguindo modelo, cópia de moldes de gesso. Em contexto de metodologia ativa ou avaliação processual, <strong>quase sempre é erro</strong>.</p>
+
+<h4>b) O qualificador que exclui</h4>
+<p>Uma ideia plausível estragada por um advérbio absoluto: <em>priorizar, principalmente, exclusivamente, apenas, somente, em detrimento de, deixando em segundo plano, sem contemplar, ignorando</em>. A prova é pluralista; alternativa que hierarquiza ou elimina uma dimensão tende a cair.</p>
+
+<h4>c) O reducionismo técnico / estético</h4>
+<p>Reduz a atividade — sobretudo os <em>critérios de avaliação</em> — a “domínio da técnica”, “qualidade técnica do vídeo/edição”, “habilidade motora”, “beleza”, “estética visual”, “profissionalismo dos programas”. A prova valoriza processo, pesquisa e criação sobre acabamento.</p>
+
+<h4>d) O esvaziamento da aula de arte</h4>
+<p>A aula de arte vira outra coisa: palestra sobre diferenças biológicas dos sexos; workshop de maquiagem; concurso de beleza; campeonato de esportes; produção de um artigo para o mural; “arte como entretenimento”. Sempre que a arte some da alternativa, desconfie.</p>
+
+<h4>e) A leitura higienizada da obra engajada</h4>
+<p>“Celebra”, “harmonia”, “equilíbrio”, “neutralidade em sala de aula”, “desvinculado de contextos sociais”, “mantendo a neutralidade”. Obra crítica pede leitura crítica.</p>
+
+<h4>f) O eurocentrismo / cânone como norma</h4>
+<p>“Integrar a história da arte europeia priorizando suas contribuições”, “ênfase nos mapas antigos da Europa”, “padrões universais”, “cânones clássicos”, “técnicas canônicas”. Em item intercultural ou decolonial, é o distrator plantado.</p>
+
+<h4>g) A exotização / folclorização</h4>
+<p>“Elementos culturais de origem primitiva”, “máscaras africanas para o Dia da Consciência Negra”, “culturas distantes para evitar a monotonia de pesquisar a própria comunidade”, arte indígena tratada como etnografia. Essencializa e distancia.</p>
+
+<h4>h) A heteronomia (protagonismo do professor)</h4>
+<p>O professor define tudo e o aluno só executa/monta; “roteiro técnico único comum a toda a turma”; “controle do processo para evitar interpretações equivocadas”. Contradiz o eixo da autonomia.</p>
+
+<h4>i) A tecnologia como fim ou como compra</h4>
+<p>“Priorizar a aquisição de tecnologias de ponta”, “focar em aspectos técnicos da tecnologia”, “substituem a pintura/o desenho”, “reforçam o protagonismo do professor”. Tecnologia é linguagem, não vitrine.</p>
+
+<h4>j) O distrator-tese verdadeiro-mas-parcial</h4>
+<p>Uma afirmação correta que responde <em>a outra pergunta</em>, ou que capta só uma dimensão quando o comando pede a articulação completa. É o mais perigoso: exige reler o comando (“<em>respectivamente</em>”, “<em>de maneira eficaz</em>”, “que <em>melhor</em> integra”).</p>
+
+<h4>k) O distrator óbvio</h4>
+<p>Quase todo item tem uma alternativa claramente descartável (o concurso de beleza, a leitura que “distorce a realidade sociopolítica”, o “antiquado em comparação com as mídias digitais”). Serve para você reduzir a 3 e concentrar a análise.</p>
+
+<div class="callout bad">
+  <span class="lbl">Léxico de alerta nas alternativas</span>
+  <strong>priorizar · principalmente · exclusivamente · apenas · em detrimento de · reprodução · releitura de modelo · memorização · prova objetiva · qualidade técnica · aula expositiva · palestra · seminário · neutralidade · equilíbrio/harmonia (em obra crítica) · cânone/europeu como referência · primitivo/exótico · adquirir tecnologia</strong>
+</div>
+
+<div class="callout good">
+  <span class="lbl">Léxico que costuma marcar a correta</span>
+  <strong>protagonismo · autonomia · autoral · processo · experiência do estudante · construção coletiva · diálogo/dialógica · problematizar · articular forma e contexto · múltiplas linguagens · investigação · pesquisa do território · portfólio/diário de bordo · critérios construídos com a turma · valorização da diversidade</strong>
+</div>
+
+<h3 id="checklist">Checklist de decisão na dúvida</h3>
+<ol>
+  <li><strong>Releia o comando</strong> e sublinhe o operador: “de maneira eficaz”, “que melhor integra”, “respectivamente”, “instrumento avaliativo coerente com…”.</li>
+  <li><strong>Elimine o distrator óbvio</strong> (molde <em>k</em>).</li>
+  <li><strong>Elimine o que hierarquiza / exclui</strong> (molde <em>b</em>) e o que <strong>reduz à técnica</strong> (molde <em>c</em>).</li>
+  <li>Se a obra for <strong>engajada</strong>, elimine a leitura conciliadora (molde <em>e</em>).</li>
+  <li>Se o tema for <strong>intercultural/decolonial</strong>, elimine o cânone-norma e a folclorização (moldes <em>f</em> e <em>g</em>).</li>
+  <li>Entre as que sobraram, escolha a que <strong>põe o estudante como protagonista</strong>, <strong>é dialógica/coletiva</strong> e <strong>articula forma e contexto / teoria e prática</strong> — e na qual a <strong>arte não desapareceu</strong>.</li>
+  <li>Empate: a mais <strong>completa e qualificada</strong> costuma ser a certa; a mais <strong>curta e categórica</strong> costuma ser a errada.</li>
+</ol>
+
+<!-- ============ APÊNDICE ============ -->
+<h2 id="apendice"><span class="kicker">Apêndice</span>Obras, artistas e textos citados</h2>
+
+<h3>ENADE 2024 (componente específico)</h3>
+<table>
+  <thead><tr><th>Item</th><th>Obra / artista / referência</th><th class="num">Categoria</th></tr></thead>
+  <tbody>
+    <tr><td>28</td><td>Educação intercultural no ensino de Arte (CONFAEB)</td><td class="num">1.2</td></tr>
+    <tr><td>29</td><td>Patrimônio cultural material e imaterial</td><td class="num">3.5</td></tr>
+    <tr><td>30</td><td>Margarita Azurdia, <em>A Vinda da Deusa</em> (1971–74) · tipos de avaliação</td><td class="num">1.3</td></tr>
+    <tr><td>31</td><td>Repositório digital de cultura afro-brasileira e quilombola</td><td class="num">1.2 / 3.2</td></tr>
+    <tr><td>32</td><td>Decreto nº 11.784/2023 — cultura hip-hop</td><td class="num">3.2</td></tr>
+    <tr><td>33</td><td>Frente 3 de Fevereiro, <em>Bandeiras</em> (2006) · artivismo</td><td class="num">2.6</td></tr>
+    <tr><td>34</td><td>Rosana Paulino, <em>Parede da Memória</em> (1994–2015)</td><td class="num">3.2</td></tr>
+    <tr><td>35</td><td>Agnes Denes, <em>Wheatfield — A Confrontation</em> (1982) · Land Art</td><td class="num">2.7</td></tr>
+    <tr><td>36</td><td>Curadoria e mediação cultural em galeria</td><td class="num">1.6</td></tr>
+    <tr><td>37</td><td>Ensino intercultural com artistas contemporâneos (Sueli Maxakali)</td><td class="num">1.2</td></tr>
+    <tr><td>38</td><td>Jesús Ruiz Durand · cartazes “pop achorado”, reforma agrária no Peru</td><td class="num">2.6</td></tr>
+    <tr><td>39</td><td>Stan Brakhage · cinema experimental · avaliação equitativa</td><td class="num">1.3</td></tr>
+    <tr><td>40</td><td>Jorge Menna Barreto, <em>Restauro</em> (2016) · hibridismo, TICs</td><td class="num">2.4 / 2.2</td></tr>
+    <tr><td>41</td><td>Nan Goldin, <em>The Other Side</em> (2000) · diversidade de gênero</td><td class="num">3.4</td></tr>
+    <tr><td>42</td><td>Ocvirk et al. · tema, forma e conteúdo</td><td class="num">2.1</td></tr>
+    <tr><td>43</td><td>Luis Camnitzer · mediação em exposições</td><td class="num">1.6</td></tr>
+    <tr><td>44</td><td>TICs no ensino de Artes Visuais (uso amplo)</td><td class="num">1.2 / 2.4</td></tr>
+    <tr><td>45</td><td>Ana Raylander Mártis dos Anjos, <em>Milissegundos nos Trapos de Mundo</em> · vida trans</td><td class="num">3.4</td></tr>
+    <tr><td>46</td><td>Feira cultural · manifestação artística da comunidade · avaliação</td><td class="num">1.3</td></tr>
+    <tr><td>47</td><td>Betye Saar · assemblage</td><td class="num">2.2</td></tr>
+    <tr><td>48</td><td>Representação do corpo humano (Gombrich; gregos; Michelangelo)</td><td class="num">2.1</td></tr>
+    <tr><td>49</td><td>Marcel Duchamp, <em>Bottle Rack</em> (1914) · ready-made</td><td class="num">2.1</td></tr>
+    <tr><td>50</td><td>BNCC · seis dimensões do conhecimento em Arte</td><td class="num">1.5</td></tr>
+    <tr><td>51</td><td>Angélica Dass, <em>Humanae</em> (2012) · diversidade do povo brasileiro</td><td class="num">3.2 / 2.1</td></tr>
+    <tr><td>52</td><td>Loyola &amp; Pimentel · laboratório-ateliê · processos de criação</td><td class="num">1.1</td></tr>
+    <tr><td>53</td><td>Arte, Ciência e Tecnologia · interação humano–máquina</td><td class="num">2.4</td></tr>
+    <tr><td>54</td><td>Carlos Vergara, <em>Sudário</em> (2014) · textura, monotipia</td><td class="num">2.1</td></tr>
+    <tr><td>55</td><td>Museu Casa de Portinari · tour virtual 360°</td><td class="num">1.6 / 2.4</td></tr>
+    <tr><td>56</td><td>Jogo <em>The Bridge</em> · estética de M. C. Escher · física e composição</td><td class="num">2.1</td></tr>
+    <tr><td>57</td><td>Portfólio como ferramenta avaliativa</td><td class="num">1.3</td></tr>
+    <tr><td>58</td><td>Lalo de Almeida · fotografia socioambiental do Pantanal</td><td class="num">2.7</td></tr>
+    <tr><td>59</td><td>Galeria no metaverso · projeto interdisciplinar (curadoria e mediação)</td><td class="num">1.6 / 2.4</td></tr>
+    <tr><td>60</td><td>Gonzalo Pedraza, <em>Você me empresta uma obra de arte?</em> · o que é arte</td><td class="num">2.5</td></tr>
+    <tr><td>61</td><td>Raimundo Rodrigues · “arte da lata”, instalação · critérios de avaliação</td><td class="num">1.3 / 2.6</td></tr>
+    <tr><td>62</td><td>Van Gogh em Realidade Virtual · interdisciplinar Arte–Tecnologia–História</td><td class="num">2.4</td></tr>
+    <tr><td>63</td><td>Redes sociais, filtros e padrões estéticos · projeto de intervenção</td><td class="num">2.3</td></tr>
+    <tr><td>Disc.</td><td>Plano de aula: arte urbana / mural coletivo / “A parede é coisa política por excelência” / bullying e diversidade</td><td class="num">1.2 / 2.6</td></tr>
+  </tbody>
+</table>
+
+<h3>PND 2025 (Prova 1)</h3>
+<table>
+  <thead><tr><th>Itens</th><th>Obra / artista / referência</th><th class="num">Categoria</th></tr></thead>
+  <tbody>
+    <tr><td>31–32</td><td>Zina Aita, <em>Homens trabalhando</em> (1922) · leitura de imagem, abordagem triangular, criação coletiva</td><td class="num">1.2 / 2.2</td></tr>
+    <tr><td>33–35</td><td>“Italian Brainrot” (IA) × poema fonético <em>Karawane</em>, de Hugo Ball (dadaísmo)</td><td class="num">2.4 / 2.2</td></tr>
+    <tr><td>36–37</td><td>Espaço <em>maker</em> · integração de materiais, técnicas e tecnologias; avatares, corpos reais × virtuais</td><td class="num">2.4 / 2.3</td></tr>
+    <tr><td>38</td><td>Altas Habilidades/Superdotação e AEE</td><td class="num">1.8</td></tr>
+    <tr><td>39–41</td><td>Joaquín Torres García, <em>América Invertida</em> (1943) · crítica ao eurocentrismo, interculturalidade</td><td class="num">3.1 / 2.6</td></tr>
+    <tr><td>42–44</td><td>Aline Motta, <em>A água é uma máquina do tempo</em> (2023) · práticas híbridas, memória, colonialismo</td><td class="num">2.2 / 3.2</td></tr>
+    <tr><td>45–46</td><td>Alvarenga · tendências pedagógicas no ensino da arte · avaliação por plano de ensino</td><td class="num">1.1 / 1.3</td></tr>
+    <tr><td>47–49</td><td>Silvana Mendes (<em>Frestas III</em>) × Pierre Mignard · desconstrução de narrativas eurocentradas</td><td class="num">3.1 / 2.6</td></tr>
+    <tr><td>50–51</td><td>Nuno Ramos, <em>Un Coup de Dés</em> (2002) · ruptura dos suportes tradicionais</td><td class="num">2.2</td></tr>
+    <tr><td>52–53</td><td>Vigotski · imaginação e criatividade · múltiplas linguagens e tecnologias</td><td class="num">1.1 / 2.4</td></tr>
+    <tr><td>54–56</td><td>Aníbal López (A-153167), <em>Una tonelada de libros…</em> (2003) · performance política, acesso à cultura</td><td class="num">1.3 / 2.6</td></tr>
+    <tr><td>57–59</td><td>Chiharu Shiota, <em>The Key in the Hand</em> (2015) · percepção e experiência estética</td><td class="num">2.1</td></tr>
+    <tr><td>60</td><td>Sidney Amaral, <em>Banzo…</em> (2014) · autonomia e produção de sentidos</td><td class="num">3.2</td></tr>
+    <tr><td>61–62</td><td>Renata Felinto, <em>Axexê da negra</em> (2017) · antropofagia, autorrepresentação de mulheres negras</td><td class="num">3.2</td></tr>
+    <tr><td>63–65</td><td>Uýra Sodoma · performance indígena e drag · ambiente, ancestralidade, corpo dissidente</td><td class="num">3.3 / 3.4</td></tr>
+    <tr><td>66</td><td>Daltonismo nas aulas de arte (referência a Van Gogh) · inclusão</td><td class="num">1.8</td></tr>
+    <tr><td>67</td><td>Lei nº 15.100/2025 (“Lei do Celular”)</td><td class="num">1.5</td></tr>
+    <tr><td>68–70</td><td>Eduardo Srur · intervenção urbana e Educação Ambiental</td><td class="num">2.7</td></tr>
+    <tr><td>71–72</td><td>NFT, blockchain e mercado de arte · sistema e circulação da arte</td><td class="num">2.5</td></tr>
+    <tr><td>73–75</td><td>Mediação em museus e centros culturais · modelo dialógico × modelo de “tradução”</td><td class="num">1.6</td></tr>
+    <tr><td>76–78</td><td>Patrimônio cultural urbano · aluno como pesquisador do território · diário de bordo</td><td class="num">3.5 / 1.3</td></tr>
+    <tr><td>79–80</td><td>BNCC EF69AR31 · projeto intergeracional (9º ano em casa de repouso)</td><td class="num">1.5 / 1.2</td></tr>
+  </tbody>
+</table>
+
+<p style="font-size:0.83rem;color:var(--graphite)">A coluna “Categoria” usa a numeração de subtemas do anexo <em>revisao_corpus_codificador.html</em>. Quando há duas, a primeira é a do conhecimento decisivo para o acerto. Um pequeno número de itens do banco 2025 tem chave de resposta que conflita com a lógica dominante da prova (possível ruído de digitação na fonte) — não foram usados como exemplo na Parte 4.</p>
+
+<footer class="doc">
+  Fontes primárias: <code>referencias_artigos/provas_enade_oficiais/</code> (provas e gabaritos oficiais 2024 e 2025), <code>referencias_artigos/dados_questoes.js</code> (enunciados, alternativas e gabaritos), <code>referencias_artigos/corpus_enade_completo.csv</code> e <code>referencias_artigos/revisao_corpus_codificador.html</code> (categorias e subtemas). Documento de estudo — enunciados oficiais do INEP citados de forma abreviada.
+</footer>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('themeToggle');
+    var modes = ['auto', 'light', 'dark'];
+    var i = 0;
+    try {
+      var saved = localStorage.getItem('rev2425_theme');
+      if (saved) i = Math.max(0, modes.indexOf(saved));
+    } catch (e) {}
+    function apply() {
+      var m = modes[i];
+      if (m === 'auto') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', m);
+      btn.textContent = 'tema: ' + m;
+      try { localStorage.setItem('rev2425_theme', m); } catch (e) {}
+    }
+    btn.addEventListener('click', function () { i = (i + 1) % modes.length; apply(); });
+    apply();
+  })();
+</script>
+</body>
+</html>
