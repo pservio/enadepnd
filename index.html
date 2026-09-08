@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENADE · PND — Artes Visuais (Licenciatura)</title>
+<style>
+  :root {
+    --paper: #EEEBE2; --paper-raised: #F7F5EF; --rule: #D9D4C4; --rule-strong: #C3BCA6;
+    --ink: #1E2A44; --ink-soft: #46587F; --graphite: #6B675F; --accent: #1E2A44;
+    --font-display: Georgia, 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #141922; --paper-raised: #1B2129; --rule: #2B3242; --rule-strong: #3A4356;
+      --ink: #E7E3D8; --ink-soft: #AFC0DE; --graphite: #9A9890; --accent: #93AAD9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 3.5rem 1.4rem 5rem; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--graphite);
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; line-height: 1.2;
+    margin: 0.5rem 0 0.6rem; text-wrap: balance;
+  }
+  .intro { color: var(--ink-soft); font-size: 1.02rem; }
+  h2 {
+    font-family: var(--font-display); font-weight: 400; font-size: 1.15rem;
+    margin: 2.6rem 0 0.8rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+  }
+  a.card {
+    display: block; text-decoration: none; color: inherit;
+    border: 1px solid var(--rule-strong); background: var(--paper-raised);
+    padding: 1rem 1.2rem; margin: 0.9rem 0; transition: border-color 0.12s;
+  }
+  a.card:hover { border-color: var(--accent); }
+  a.card .t { font-family: var(--font-display); font-size: 1.08rem; color: var(--ink); }
+  a.card .d { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
+  a.card .path { font-family: var(--font-mono); font-size: 0.72rem; color: var(--graphite); margin-top: 0.5rem; }
+  footer {
+    margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+    font-size: 0.82rem; color: var(--graphite);
+  }
+  footer a { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">Materiais de estudo</span>
+  <h1>ENADE &amp; PND — Artes Visuais (Licenciatura)</h1>
+  <p class="intro">Revisão e análise das avaliações nacionais do componente específico de Artes Visuais: ENADE e Prova Nacional Docente (PND).</p>
+
+  <h2>Revisão</h2>
+
+  <a class="card" href="revisao/revisao_2024_2025_material_didatico.html">
+    <div class="t">Revisão dirigida — ENADE 2024 + PND 2025</div>
+    <div class="d">Panorama comparativo das duas provas, revisão do conteúdo por categoria e subtema temático, e análise dos padrões de redação das alternativas corretas e incorretas, com checklist de decisão.</div>
+    <div class="path">revisao/revisao_2024_2025_material_didatico.html</div>
+  </a>
+
+  <footer>
+    Código-fonte: <a href="https://github.com/pservio/enadepnd">github.com/pservio/enadepnd</a>.
+    Os enunciados oficiais são documentos públicos do INEP e aparecem apenas de forma abreviada, para fins de estudo.
+  </footer>
+</div>
+</body>
+</html>
