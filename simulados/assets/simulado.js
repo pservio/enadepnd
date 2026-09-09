@@ -191,6 +191,7 @@
       });
 
       var envio = {
+        simulado_id: prova.id,
         simulado: prova.curto + " — " + prova.tema,
         nome: nome,
         turma: (estado.turma || "").trim(),

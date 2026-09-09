@@ -1,49 +1,47 @@
 /**
- * Recebe os envios dos simulados e grava numa planilha Google.
- * Opção B do config.js (grátis e sem limite de envios).
+ * Recebe os envios dos simulados e grava numa planilha Google — uma aba por dia.
  *
- * PASSO A PASSO
- * 1. Crie uma Planilha Google nova (Google Sheets).
- * 2. Menu  Extensões > Apps Script.  Apague o conteúdo e cole este arquivo.
- * 3. Menu  Implantar > Nova implantação > tipo "App da Web".
- *      - Executar como: eu
- *      - Quem pode acessar: qualquer pessoa
- *    Copie a URL que termina em /exec
- * 4. Cole essa URL em assets/config.js, no campo ENDPOINT.
- * 5. Pronto. Cada envio vira uma linha na aba "Respostas".
+ * >>> ATENÇÃO AO PUBLICAR / REPUBLICAR <<<
+ * Implantar > (Gerenciar implantações) > editar (lápis) > Nova versão > Implantar
+ *   - Executar como:        Eu
+ *   - Quem pode acessar:    Qualquer pessoa      <-- NÃO "com Conta do Google"
+ * Se ficar diferente disso, os alunos recebem 403 e nada é gravado.
+ * A URL /exec continua a mesma depois de republicar.
+ *
+ * Abas usadas (crie ou serão criadas sozinhas): simulado1, simulado2, simulado3.
  */
+
+var ABAS = { dia14: 'simulado1', dia15: 'simulado2', dia16: 'simulado3' };
+var CABECALHO = ['recebido_em', 'nome', 'turma', 'acertos', 'em_branco',
+                 'respostas', 'data_hora_aluno', 'simulado', 'origem'];
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
+  lock.waitLock(30000);
   try {
-    var dados = JSON.parse(e.postData.contents);
+    var d = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var aba = ss.getSheetByName('Respostas') || ss.insertSheet('Respostas');
-    if (aba.getLastRow() === 0) {
-      aba.appendRow(['recebido_em', 'simulado', 'nome', 'turma', 'acertos', 'em_branco', 'respostas', 'data_hora_aluno', 'origem']);
-    }
+    var nome = ABAS[d.simulado_id] || 'Respostas';
+    var aba = ss.getSheetByName(nome) || ss.insertSheet(nome);
+    if (aba.getLastRow() === 0) aba.appendRow(CABECALHO);
     aba.appendRow([
       new Date(),
-      dados.simulado || '',
-      dados.nome || '',
-      dados.turma || '',
-      dados.acertos || '',
-      dados.em_branco || '',
-      dados.respostas || '',
-      dados.data_hora || '',
-      dados.origem || ''
+      d.nome || '', d.turma || '', d.acertos || '', d.em_branco || '',
+      d.respostas || '', d.data_hora || '', d.simulado || '', d.origem || ''
     ]);
-    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return json({ ok: true });
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ ok: false, erro: String(err) }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return json({ ok: false, erro: String(err) });
   } finally {
     lock.releaseLock();
   }
 }
 
 function doGet() {
-  return ContentService.createTextOutput('Simulado ENADE/PND — endpoint ativo.');
+  return ContentService.createTextOutput('Simulados ENADE/PND — endpoint ativo. Os envios chegam por POST.');
+}
+
+function json(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }

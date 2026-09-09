@@ -32,67 +32,58 @@ chega perto do limite. Se a turma for maior, use a Opção B.
 A ideia: um pequeno script (Google Apps Script) recebe cada envio e grava uma linha
 numa planilha sua. Tudo dentro da sua conta Google, sem instalar nada.
 
-### 1. Criar a planilha
+> **Estado atual:** a planilha *"simulados enade/pnd"* já existe com as abas
+> `simulado1`, `simulado2`, `simulado3`, e a URL `/exec` já está no `config.js`.
+> Falta só **liberar o acesso da implantação** e **republicar com o código atual**.
 
-- Vá em <https://sheets.google.com> → **planilha em branco**.
-- Dê um nome (ex.: *Simulados ENADE-PND — respostas*).
-- Não precisa criar colunas nem abas: o script faz isso sozinho.
+### 1. Planilha e abas
 
-### 2. Abrir o editor de script
+Já feito. Cada dia grava numa aba: **dia 14 → `simulado1`**, **dia 15 → `simulado2`**,
+**dia 16 → `simulado3`**. Se os nomes das abas forem outros, ajuste o objeto `ABAS`
+no topo do `apps-script.gs`.
 
-- Na planilha, menu **Extensões → Apps Script**.
-- Abre uma aba nova com um arquivo `Código.gs` contendo `function myFunction() {}`.
-- **Apague tudo** e cole o conteúdo do arquivo **`apps-script.gs`** (está nesta pasta).
-- Clique no ícone de **salvar** (💾) ou `Ctrl+S`. Dê um nome ao projeto se pedir.
+### 2. Colar o código atual
 
-### 3. Publicar como aplicativo da web
+- Na planilha: **Extensões → Apps Script**.
+- Apague o que estiver lá e cole **todo** o conteúdo de **`apps-script.gs`** (versão
+  desta pasta — a que roteia para 3 abas).
+- Salvar (💾).
 
-- No canto superior direito: **Implantar → Nova implantação**.
-- Clique na engrenagem ⚙️ ao lado de "Selecionar tipo" → escolha **App da Web**.
-- Preencha:
-  - **Descrição:** `receber simulados` (qualquer texto).
-  - **Executar como:** **Eu (seu@gmail.com)**.
-  - **Quem pode acessar:** **Qualquer pessoa**.
-    *(É "qualquer pessoa" mesmo — o site precisa poder chamar o script sem login.
-    O script só escreve na planilha; ninguém consegue ler a planilha por ele.)*
-- Clique **Implantar**.
+### 3. Republicar com "Qualquer pessoa"  ← O PASSO QUE FALTA
 
-### 4. Autorizar (só na primeira vez)
+Sua implantação atual está **restrita** (dá "Acesso negado"). Corrija:
 
-- O Google pede permissão para o script acessar suas planilhas.
-- Vai aparecer **"O Google não verificou este app"** — é normal para script próprio.
-  Clique em **Avançado → Acessar (nome do projeto) (não seguro)** → **Permitir**.
+- **Implantar → Gerenciar implantações**.
+- No card da implantação ativa, clique no **lápis ✏️ (Editar)**.
+- **Versão:** escolha **Nova versão** (isso publica o código novo).
+- **Quem pode acessar:** mude para **`Qualquer pessoa`**
+  — **não** "Qualquer pessoa com Conta do Google".
+- **Executar como:** **Eu**.
+- **Implantar**.
 
-### 5. Copiar a URL
+A **URL `/exec` continua a mesma** — não precisa mexer no `config.js`.
 
-- Ao final aparece uma **URL do app da Web** terminada em **`/exec`**, tipo:
-  `https://script.google.com/macros/s/AKfycb..../exec`
-- **Copie essa URL.**
+> Se o Google pedir autorização de novo: **Avançado → Acessar (projeto) (não seguro)
+> → Permitir**. É normal para script próprio.
 
-### 6. Colar no config.js
+### 4. Conferir o acesso
 
-Abra `assets/config.js` e deixe assim (troque pela sua URL):
+Abra a URL `/exec` numa **aba anônima** (ou num navegador sem login Google).
+Você deve ver o texto *"Simulados ENADE/PND — endpoint ativo…"*.
+Se aparecer tela de login ou "Você precisa ter acesso", o passo 3 não pegou.
 
-```js
-window.CONFIG = {
-  ENDPOINT: "https://script.google.com/macros/s/AKfycb..../exec",
-  ENDPOINT_TIPO: "auto",              // detecta sozinho que é Apps Script
-  PROFESSOR_NOME: "Prof. Pablo",
-  PROFESSOR_CONTATO: "pservio@gmail.com",
-  AVISO: "Faça sem consultar material..."
-};
-```
+### 5. Testar de ponta a ponta
 
-Salve, faça `git commit` + `git push` (ou suba o arquivo pelo site do GitHub).
+- Abra `.../simulados/dia14.html`, responda, ponha um nome de teste, envie.
+- Volte à planilha, aba **`simulado1`**: deve surgir uma linha.
+- Colunas: `recebido_em`, `nome`, `turma`, `acertos`, `em_branco`, `respostas`,
+  `data_hora_aluno`, `simulado`, `origem`.
+- A coluna `respostas` vem como `1:A 2:C 3:B …` (nº da questão : letra).
 
-### 7. Testar
-
-- Abra `.../simulados/dia14.html`, responda qualquer coisa, coloque um nome de teste
-  e envie.
-- Volte à **planilha**: deve aparecer a aba **Respostas** com uma linha nova.
-- Colunas: `recebido_em`, `simulado`, `nome`, `turma`, `acertos`, `em_branco`,
-  `respostas`, `data_hora_aluno`, `origem`.
-- A coluna `respostas` vem no formato `1:A 2:C 3:B ...` (número da questão : letra).
+> Com Apps Script, **o aluno sempre vê "enviado"** (o script não devolve
+> confirmação ao navegador). Por isso o teste do passo 5 é obrigatório: só a linha
+> na planilha confirma que está funcionando. Se você editar o script depois, tem que
+> **republicar** (passo 3, "Nova versão") — senão continua rodando o código antigo.
 
 ### Depois: acompanhar e corrigir
 
@@ -109,33 +100,29 @@ Salve, faça `git commit` + `git push` (ou suba o arquivo pelo site do GitHub).
 
   (a coluna `acertos` já vem pronta, tipo `9/12` — isso costuma bastar.)
 
-### Se precisar mudar o script depois
-
-Edite o `apps-script.gs` no editor e faça **Implantar → Gerenciar implantações →
-✏️ editar → Nova versão → Implantar**. A URL `/exec` **continua a mesma** — não
-precisa mexer no `config.js`.
-
 ### Problemas comuns
 
-| Sintoma | Causa provável |
+| Sintoma | Causa provável / solução |
 |---|---|
-| Aluno vê "não foi possível enviar" mas a planilha recebe | Normal: o Apps Script não devolve confirmação ao navegador. O `.csv` que ele baixa é só um backup — pode ignorar se a linha chegou. |
-| Nada chega na planilha | URL não termina em `/exec`; ou "Quem pode acessar" ≠ "Qualquer pessoa"; ou faltou reimplantar após editar o script. |
-| Chega, mas sem acentos | Não acontece com o script fornecido (usa UTF-8). |
+| URL `/exec` dá "Acesso negado" / pede login | "Quem pode acessar" ≠ **Qualquer pessoa**. Refaça o passo 3. |
+| Aba anônima mostra o texto "endpoint ativo", mas nada chega na planilha ao enviar | Faltou **Nova versão** ao republicar — está rodando o código antigo, sem as 3 abas. Refaça o passo 3 escolhendo "Nova versão". |
+| Grava tudo numa aba só chamada `Respostas` | Os nomes das abas na planilha são diferentes de `simulado1/2/3`. Renomeie as abas ou ajuste `ABAS` no `apps-script.gs` e republique. |
+| Aluno vê "enviado", mas a linha não aparece | Sempre teste você mesmo (passo 5). O aluno não tem como saber — o `.csv` que ele baixa é o backup. |
 
 ---
 
-## Campos enviados (qualquer opção)
+## Campos enviados (uma linha por aluno)
 
-| campo | exemplo |
+| coluna | exemplo |
 |---|---|
-| `simulado` | `Dia 14 · 14/09 — Ensino, Metodologias e Avaliação...` |
+| `recebido_em` | (data/hora do servidor) |
 | `nome` | `Ana Silva` |
 | `turma` | `Artes Visuais - 8º período` (opcional) |
 | `acertos` | `9/12` |
 | `em_branco` | `0` |
 | `respostas` | `1:A 2:C 3:B 4:D 5:A 6:D 7:A 8:B 9:D 10:B 11:C 12:B` |
-| `data_hora` | `14/09/2026, 15:12:40` (horário do aluno) |
+| `data_hora_aluno` | `14/09/2026, 15:12:40` (relógio do aluno) |
+| `simulado` | `Dia 14 · 14/09 — Ensino, Metodologias e Avaliação...` |
 | `origem` | URL da página |
 
 O `.csv` que o aluno baixa tem as mesmas colunas (uma linha), abre no Excel
