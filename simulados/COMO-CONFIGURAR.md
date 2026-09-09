@@ -85,20 +85,47 @@ Se aparecer tela de login ou "Você precisa ter acesso", o passo 3 não pegou.
 > na planilha confirma que está funcionando. Se você editar o script depois, tem que
 > **republicar** (passo 3, "Nova versão") — senão continua rodando o código antigo.
 
-### Depois: acompanhar e corrigir
+---
 
-- Cada aluno gera **uma linha por envio**. Se alguém enviar duas vezes, ficam duas
-  linhas — vale a de `recebido_em` mais recente (ou combine com a turma que é envio
-  único).
-- Para calcular quem acertou o quê por questão, cole numa aba ao lado o gabarito:
+## Painel de correção (grade verde/vermelho, estilo Socrative)
 
-  | | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Q11 | Q12 |
-  |---|---|---|---|---|---|---|---|---|---|---|---|---|
-  | **Dia 14** | A | A | D | A | B | D | A | B | D | B | C | B |
-  | **Dia 15** | A | B | B | D | B | A | C | D | B | D | A | B |
-  | **Dia 16** | A | C | A | B | C | A | B | C | A | D | A | B |
+O `apps-script.gs` deste repositório monta um painel visual **dentro da própria
+planilha** a partir das respostas: uma grade aluno × questão, verde = acertou,
+vermelho = errou, com o total da turma por questão em "mapa de calor".
 
-  (a coluna `acertos` já vem pronta, tipo `9/12` — isso costuma bastar.)
+### Ligar
+
+1. Cole a versão atual do **`apps-script.gs`** no editor (Extensões → Apps Script) e
+   **salve** (💾). Isso **não** exige reimplantar — o `doPost` não mudou; só entraram
+   as funções do painel.
+2. **Recarregue a planilha.** Aparece o menu **Simulados** na barra superior.
+3. **Simulados → Atualizar painel.** Na primeira vez o Google pede autorização
+   (Avançado → Permitir). São criadas as abas:
+   - **`Painel · D14` / `D15` / `D16`** — grade de um dia
+   - **`Painel · Consolidado`** — os 3 dias por aluno, ordenado pela média geral
+
+### Usar
+
+- **Sempre que quiser ver os resultados atualizados:** Simulados → Atualizar painel
+  (o painel não se atualiza sozinho a cada envio).
+- **Modo projetor:** em cada aba de painel, marque a caixa **B2 "Esconder nomes"** —
+  a coluna Aluno vira "Aluno 1, 2, 3…" para discutir com a turma sem expor ninguém.
+  Desmarque para ver os nomes de novo.
+- **Exportar:** Simulados → *Exportar painéis (PDF no Drive)* cria um PDF de cada
+  painel numa pasta do Drive. (Ou File → Fazer download → PDF, escolhendo a aba.)
+- **Linhas de teste:** nomes que começam com "teste" são ignorados no painel.
+- **Envio duplicado:** o painel usa o **envio mais recente** de cada nome.
+
+### Gabarito (embutido no script, aqui para conferência)
+
+| | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Q11 | Q12 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Dia 14** | A | A | D | A | B | D | A | B | D | B | C | B |
+| **Dia 15** | A | B | B | D | B | A | C | D | B | D | A | B |
+| **Dia 16** | A | C | A | B | C | A | B | C | A | D | A | B |
+
+Se alguma questão for anulada ou trocada, ajuste a string em `GABARITO` no topo do
+`apps-script.gs`, salve e rode "Atualizar painel".
 
 ### Problemas comuns
 
