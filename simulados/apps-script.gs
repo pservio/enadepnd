@@ -84,10 +84,14 @@ function onOpen() {
 
 function montarPaineis() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  Object.keys(ABAS).forEach(function (id) { montarDia(ss, id); });
-  montarConsolidado(ss);
+  var erros = [];
+  Object.keys(ABAS).forEach(function (id) {
+    try { montarDia(ss, id); } catch (err) { erros.push(id + ': ' + err); }
+  });
+  try { montarConsolidado(ss); } catch (err) { erros.push('consolidado: ' + err); }
   try { ordenarAbas(ss); } catch (err) {}
-  ss.toast('Painel atualizado.', 'Simulados', 4);
+  if (erros.length) SpreadsheetApp.getUi().alert('Painel atualizado com avisos:\n\n' + erros.join('\n'));
+  else ss.toast('Painel atualizado.', 'Simulados', 4);
 }
 
 /** lê e normaliza as respostas de um dia; deduplica por nome (mantém o envio mais recente) */
@@ -120,22 +124,23 @@ function lerDia(ss, id) {
 function montarDia(ss, id) {
   var nome = 'Painel · ' + id.replace('dia', 'D');
   var sh = ss.getSheetByName(nome) || ss.insertSheet(nome);
-  var escondiaAntes = sh.getRange('B2').getValue() === true;
+  var escondiaAntes = sh.getRange('A2').getValue() === true;
   sh.clear();
+  try { sh.getRange(1, 1, 1, sh.getMaxColumns()).breakApart(); } catch (err) {}
   var gab = GABARITO[id].split('');
   var alunos = lerDia(ss, id);
   var totalCols = 4 + NQ; // Nº, Aluno, Turma, % + Q1..Q12
 
-  // linha 1 — título
-  sh.getRange(1, 1, 1, totalCols).merge()
-    .setValue(TITULO[id] + '  ·  ' + alunos.length + ' participante(s)')
+  // linha 1 — título (sem mesclar, para não travar o congelamento de colunas)
+  sh.getRange(1, 1, 1, totalCols)
     .setBackground(C_HEAD).setFontColor('#ffffff').setFontWeight('bold').setFontSize(12)
     .setVerticalAlignment('middle');
+  sh.getRange('A1').setValue('  ' + TITULO[id] + '   ·   ' + alunos.length + ' participante(s)');
   sh.setRowHeight(1, 26);
 
-  // linha 2 — controle projetor
-  sh.getRange('A2').setValue('Esconder nomes (projetor):').setFontColor('#666');
-  sh.getRange('B2').insertCheckboxes().setValue(false);
+  // linha 2 — controle projetor (checkbox em A2, rótulo em B2)
+  sh.getRange('A2').insertCheckboxes().setValue(false);
+  sh.getRange('B2').setValue('← marque para esconder os nomes (modo projetor)').setFontColor('#888');
 
   // linha 3 — cabeçalho
   var head = ['Nº', 'Aluno', 'Turma', '%'];
@@ -206,7 +211,7 @@ function montarDia(ss, id) {
   sh.getRange(1, 1, linhaTotal, totalCols).setBorder(true, true, true, true, true, true, '#cccccc', null);
 
   if (escondiaAntes) {
-    sh.getRange('B2').setValue(true);
+    sh.getRange('A2').setValue(true);
     aplicarProjetor(sh, true);
   }
 }
@@ -230,13 +235,14 @@ function aplicarProjetor(sh, esconder) {
 function onEdit(e) {
   var sh = e.range.getSheet();
   if (!/^Painel · /.test(sh.getName())) return;
-  if (e.range.getA1Notation() !== 'B2') return;
+  if (e.range.getA1Notation() !== 'A2') return;
   aplicarProjetor(sh, e.range.getValue() === true);
 }
 
 function montarConsolidado(ss) {
   var sh = ss.getSheetByName('Painel · Consolidado') || ss.insertSheet('Painel · Consolidado');
   sh.clear();
+  try { sh.getRange(1, 1, 1, sh.getMaxColumns()).breakApart(); } catch (err) {}
   var ids = Object.keys(ABAS);
   var mapa = {};
   ids.forEach(function (id) {
@@ -266,8 +272,8 @@ function montarConsolidado(ss) {
       r.dia16 == null ? '' : r.dia16,
       r.geral, r.feitos + '/3']);
   });
-  sh.getRange(1, 1, 1, 7).merge().setValue('Consolidado dos 3 simulados').setBackground(C_HEAD)
-    .setFontColor('#fff').setFontWeight('bold').setFontSize(12);
+  sh.getRange(1, 1, 1, 7).setBackground(C_HEAD).setFontColor('#fff').setFontWeight('bold').setFontSize(12);
+  sh.getRange('A1').setValue('  Consolidado dos 3 simulados');
   sh.getRange(3, 1, out.length, 7).setValues(out);
   sh.getRange(3, 1, 1, 7).setFontWeight('bold').setBackground('#e8e8e8');
   if (out.length > 1) {
