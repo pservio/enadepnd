@@ -14,11 +14,17 @@
  * PARTE 2 — PAINEL DE CORREÇÃO
  *
  *   Só depende do código salvo (💾) — NÃO precisa reimplantar.
- *   Recarregue a planilha: aparece o menu "Simulados" no topo.
- *     • Atualizar painel        → (re)constrói as abas "Painel · D14/D15/D16"
- *                                  e "Painel · Consolidado" a partir das respostas
- *     • Exportar painéis (PDF)   → salva um PDF de cada painel no Drive
- *   Nas abas de painel, marque a caixa "Esconder nomes" (B2) para projetar.
+ *   Recarregue a planilha: aparece o menu "Simulados > Atualizar painel", que
+ *   (re)constrói as abas "Painel · D14/D15/D16" e "Painel · Consolidado".
+ *   Nas abas de painel, marque a caixa "Esconder nomes" (A2) para projetar.
+ *   Para exportar: Arquivo > Fazer download > PDF (nativo do Sheets).
+ *
+ * SEGURANÇA
+ *   - "Executar como: Eu" + "Qualquer pessoa": o script só lê/escreve NESTA
+ *     planilha (escopo "planilha atual"). Não acessa Drive, e-mail nem outras
+ *     planilhas. O doGet não devolve dados.
+ *   - Campos enviados pelos alunos são gravados como texto literal (limpa()),
+ *     neutralizando fórmulas maliciosas (=IMPORTDATA, =HYPERLINK, etc.).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -32,7 +38,6 @@ var TITULO   = {
 var NQ  = 12;
 var CAB = ['recebido_em', 'nome', 'turma', 'acertos', 'em_branco',
            'respostas', 'data_hora_aluno', 'simulado', 'origem'];
-var TZ  = 'America/Fortaleza';
 
 // cores
 var C_OK = '#c6efce', C_ERRO = '#ffc7ce', C_VAZIO = '#eeeeee',
@@ -53,8 +58,8 @@ function doPost(e) {
     if (aba.getLastRow() === 0) aba.appendRow(CAB);
     aba.appendRow([
       new Date(),
-      d.nome || '', d.turma || '', d.acertos || '', d.em_branco || '',
-      d.respostas || '', d.data_hora || '', d.simulado || '', d.origem || ''
+      limpa(d.nome), limpa(d.turma), limpa(d.acertos), limpa(d.em_branco),
+      limpa(d.respostas), limpa(d.data_hora), limpa(d.simulado), limpa(d.origem)
     ]);
     return json({ ok: true });
   } catch (err) {
@@ -72,13 +77,18 @@ function json(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
+/** neutraliza injeção de fórmula/CSV: prefixa ' quando o valor começa com = + - @ TAB CR */
+function limpa(v) {
+  v = String(v == null ? '' : v);
+  return /^[=+\-@\t\r]/.test(v) ? "'" + v : v;
+}
+
 // ===========================================================================
 // PARTE 2 — PAINEL
 // ===========================================================================
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Simulados')
     .addItem('Atualizar painel', 'montarPaineis')
-    .addItem('Exportar painéis (PDF no Drive)', 'exportarPDF')
     .addToUi();
 }
 
@@ -161,7 +171,7 @@ function montarDia(ss, id) {
   alunos.forEach(function (m, idx) {
     var acertos = 0;
     var linhaFundo = [null, null, null, null];
-    var linhaVal = [idx + 1, m.nome, m.turma || '', 0];
+    var linhaVal = [idx + 1, limpa(m.nome), limpa(m.turma || ''), 0];
     for (var i = 0; i < NQ; i++) {
       var L = m.letras[i];
       linhaVal.push(L === '-' ? '·' : L);
@@ -170,7 +180,7 @@ function montarDia(ss, id) {
       else { linhaFundo.push(C_ERRO); }
     }
     linhaVal[3] = acertos / NQ;
-    dados.push(linhaVal); fundos.push(linhaFundo); nomesReais.push([m.nome]);
+    dados.push(linhaVal); fundos.push(linhaFundo); nomesReais.push([limpa(m.nome)]);
   });
 
   if (dados.length) {
@@ -266,7 +276,7 @@ function montarConsolidado(ss) {
   var head = ['Nº', 'Aluno', 'Dia 14', 'Dia 15', 'Dia 16', 'Geral', 'Feitos'];
   var out = [head];
   linhas.forEach(function (r, i) {
-    out.push([i + 1, r.nome,
+    out.push([i + 1, limpa(r.nome),
       r.dia14 == null ? '' : r.dia14,
       r.dia15 == null ? '' : r.dia15,
       r.dia16 == null ? '' : r.dia16,
@@ -299,22 +309,4 @@ function ordenarAbas(ss) {
   });
 }
 
-function exportarPDF() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var pais = DriveApp.getFileById(ss.getId()).getParents();
-  var pasta = pais.hasNext() ? pais.next() : DriveApp.getRootFolder();
-  var carimbo = Utilities.formatDate(new Date(), TZ, 'yyyy-MM-dd HHmm');
-  var alvo = pasta.createFolder('Paineis simulados ' + carimbo);
-  var abas = ['Painel · D14', 'Painel · D15', 'Painel · D16', 'Painel · Consolidado'];
-  abas.forEach(function (n) {
-    var sh = ss.getSheetByName(n);
-    if (!sh) return;
-    var url = 'https://docs.google.com/spreadsheets/d/' + ss.getId() + '/export?format=pdf'
-      + '&gid=' + sh.getSheetId()
-      + '&portrait=false&fitw=true&gridlines=false&printtitle=false&pagenumbers=false&sheetnames=false';
-    var blob = UrlFetchApp.fetch(url, { headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } })
-      .getBlob().setName(n.replace(' · ', ' ') + '.pdf');
-    alvo.createFile(blob);
-  });
-  SpreadsheetApp.getUi().alert('PDFs salvos na pasta do Drive:\n' + alvo.getUrl());
-}
+// Exportar: use Arquivo > Fazer download > PDF (nativo do Sheets, sem permissão extra).

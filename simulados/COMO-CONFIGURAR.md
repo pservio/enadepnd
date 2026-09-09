@@ -96,11 +96,13 @@ vermelho = errou, com o total da turma por questão em "mapa de calor".
 ### Ligar
 
 1. Cole a versão atual do **`apps-script.gs`** no editor (Extensões → Apps Script) e
-   **salve** (💾). Isso **não** exige reimplantar — o `doPost` não mudou; só entraram
-   as funções do painel.
-2. **Recarregue a planilha.** Aparece o menu **Simulados** na barra superior.
-3. **Simulados → Atualizar painel.** Na primeira vez o Google pede autorização
-   (Avançado → Permitir). São criadas as abas:
+   **salve** (💾).
+2. **Reimplante** (o `doPost` mudou — passou a gravar tudo como texto literal):
+   Implantar → Gerenciar implantações → ✏️ Editar → Versão: **Nova versão** → Implantar.
+   (URL `/exec` continua a mesma.)
+3. **Recarregue a planilha.** Aparece o menu **Simulados** na barra superior.
+4. **Simulados → Atualizar painel.** Na primeira vez o Google pede autorização
+   (Avançado → Permitir — agora só a permissão de "planilha atual"). São criadas as abas:
    - **`Painel · D14` / `D15` / `D16`** — grade de um dia
    - **`Painel · Consolidado`** — os 3 dias por aluno, ordenado pela média geral
 
@@ -108,11 +110,12 @@ vermelho = errou, com o total da turma por questão em "mapa de calor".
 
 - **Sempre que quiser ver os resultados atualizados:** Simulados → Atualizar painel
   (o painel não se atualiza sozinho a cada envio).
-- **Modo projetor:** em cada aba de painel, marque a caixa **B2 "Esconder nomes"** —
+- **Modo projetor:** em cada aba de painel, marque a caixa **A2 "Esconder nomes"** —
   a coluna Aluno vira "Aluno 1, 2, 3…" para discutir com a turma sem expor ninguém.
   Desmarque para ver os nomes de novo.
-- **Exportar:** Simulados → *Exportar painéis (PDF no Drive)* cria um PDF de cada
-  painel numa pasta do Drive. (Ou File → Fazer download → PDF, escolhendo a aba.)
+- **Exportar:** Arquivo → Fazer download → **PDF**, escolhendo a aba do painel
+  (na caixa de diálogo dá para ajustar orientação e escala). É o modo nativo do
+  Sheets — não usa nenhuma permissão extra.
 - **Linhas de teste:** nomes que começam com "teste" são ignorados no painel.
 - **Envio duplicado:** o painel usa o **envio mais recente** de cada nome.
 
@@ -154,3 +157,30 @@ Se alguma questão for anulada ou trocada, ajuste a string em `GABARITO` no topo
 
 O `.csv` que o aluno baixa tem as mesmas colunas (uma linha), abre no Excel
 (separador `;`) e **não contém o gabarito**.
+
+---
+
+## Segurança
+
+- **O site** (GitHub Pages) é só HTML/CSS/JS estático. Não guarda segredo nenhum e
+  não tem como afetar sua conta.
+- **O Apps Script** roda "como você", mas com escopo **"planilha atual"**: só
+  lê/escreve *nesta* planilha. Não acessa Drive, Gmail, Agenda, suas outras
+  planilhas, nem devolve dados pela URL (`doGet` é um texto fixo). O aviso "app não
+  verificado" é o padrão do Google para qualquer script próprio — é você
+  autorizando o *seu* script.
+- **Endpoint público:** o `/exec` aceita POST de qualquer um (necessário para o
+  navegador do aluno). A URL fica visível no `config.js` do repositório público.
+  Consequências possíveis e como estão tratadas:
+  - *spam de linhas* → no máximo enche a planilha / estoura a cota diária (reseta
+    sozinha). Você apaga as linhas.
+  - *injeção de fórmula* (`=IMPORTDATA(...)` no nome) → **bloqueado**: o script
+    grava todo campo de aluno como texto literal (`limpa()`).
+- **Botão de pânico:**
+  - desligar o endpoint: Apps Script → Gerenciar implantações → **Arquivar** (os
+    alunos voltam ao `.csv`, a planilha fica intacta);
+  - revogar o acesso do script: <https://myaccount.google.com/permissions>;
+  - arquive as **implantações antigas** — cada uma "Qualquer pessoa" é um endpoint
+    vivo. Deixe só a atual.
+- Mantenha a **planilha** compartilhada só com você (ou "somente leitura" para
+  colegas). Quem for *editor* da planilha pode editar o script.
