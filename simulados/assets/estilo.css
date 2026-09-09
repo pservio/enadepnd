@@ -1,0 +1,111 @@
+/* Simulados — segue o design system do repositório enadepnd (revisao/, index) */
+:root{
+  --paper:#EEEBE2; --paper-raised:#F7F5EF; --paper-well:#E7E2D3;
+  --rule:#D9D4C4; --rule-strong:#C3BCA6;
+  --ink:#1E2A44; --ink-soft:#46587F; --graphite:#6B675F;
+  --accent:#1E2A44; --accent-contrast:#FDFBF6;
+  --good:#3F6B4D; --good-bg:rgba(63,107,77,0.12);
+  --bad:#A23B2E;  --bad-bg:rgba(162,59,46,0.10);
+  --font-display:Georgia,'Iowan Old Style','Palatino Linotype','Book Antiqua',serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:'SF Mono','Cascadia Code',Consolas,'Roboto Mono',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#141922; --paper-raised:#1B2129; --paper-well:#10141B;
+    --rule:#2B3242; --rule-strong:#3A4356;
+    --ink:#E7E3D8; --ink-soft:#AFC0DE; --graphite:#9A9890;
+    --accent:#93AAD9; --accent-contrast:#10141B;
+    --good:#7FBB92; --good-bg:rgba(127,187,146,0.15);
+    --bad:#E0776A;  --bad-bg:rgba(224,119,106,0.15);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141922; --paper-raised:#1B2129; --paper-well:#10141B;
+  --rule:#2B3242; --rule-strong:#3A4356;
+  --ink:#E7E3D8; --ink-soft:#AFC0DE; --graphite:#9A9890;
+  --accent:#93AAD9; --accent-contrast:#10141B;
+  --good:#7FBB92; --good-bg:rgba(127,187,146,0.15);
+  --bad:#E0776A;  --bad-bg:rgba(224,119,106,0.15);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--ink-soft)}
+.wrap{max-width:720px; margin:0 auto; padding:2.6rem 1.4rem 5rem}
+
+.eyebrow{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--graphite)}
+h1{font-family:var(--font-display); font-weight:400; font-size:1.8rem; line-height:1.2;
+  margin:.5rem 0 .5rem; text-wrap:balance}
+.intro{color:var(--ink-soft); font-size:1.02rem}
+.voltar{display:inline-block; margin:0 0 1.4rem; font-size:.9rem}
+
+/* Página inicial dos simulados */
+h2.sec{font-family:var(--font-display); font-weight:400; font-size:1.15rem;
+  margin:2.4rem 0 .8rem; padding-top:1rem; border-top:1px solid var(--rule)}
+a.card{display:block; text-decoration:none; color:inherit; border:1px solid var(--rule-strong);
+  background:var(--paper-raised); padding:1rem 1.2rem; margin:.9rem 0; transition:border-color .12s}
+a.card:hover{border-color:var(--accent)}
+a.card .t{font-family:var(--font-display); font-size:1.08rem; color:var(--ink)}
+a.card .d{font-size:.9rem; color:var(--ink-soft); margin-top:.3rem}
+
+/* Identificação */
+.ident{border:1px solid var(--rule-strong); background:var(--paper-raised); padding:1.1rem 1.3rem; margin:1.4rem 0}
+.ident .campo{margin:.7rem 0}
+.ident label{display:block; font-size:.82rem; letter-spacing:.02em; color:var(--graphite);
+  text-transform:uppercase; font-family:var(--font-mono); margin-bottom:.35rem}
+.ident input{width:100%; padding:.6rem .7rem; border:1px solid var(--rule-strong); background:var(--paper);
+  color:var(--ink); font:1rem/1.4 var(--font-body); border-radius:2px}
+.ident input:focus{outline:2px solid var(--accent); outline-offset:1px}
+.aviso{border-left:3px solid var(--rule-strong); background:var(--paper-well);
+  padding:.7rem .9rem; font-size:.9rem; color:var(--ink-soft); margin-top:1rem}
+
+/* Questões */
+.questao{border:1px solid var(--rule); background:var(--paper-raised); padding:1.2rem 1.3rem; margin:1.1rem 0}
+.questao > .cab{display:flex; flex-wrap:wrap; gap:.5rem; align-items:baseline; margin-bottom:.4rem}
+.questao .num{font-family:var(--font-display); font-size:1.15rem; color:var(--ink)}
+.questao .fonte{font-family:var(--font-mono); font-size:.72rem; color:var(--graphite)}
+.questao .obra{font-size:.82rem; color:var(--graphite); font-style:italic; margin:.1rem 0 .7rem}
+.questao figure{margin:0 0 .9rem}
+.questao img{max-width:100%; max-height:340px; height:auto; border:1px solid var(--rule); display:block; background:#fff}
+.questao .imgs{display:flex; gap:.7rem; flex-wrap:wrap}
+.questao .imgs img{max-height:300px}
+.questao .enunciado p{margin:.4em 0}
+.opcoes{list-style:none; margin:1rem 0 0; padding:0}
+.opcoes li{margin:.45rem 0}
+.opcoes label{display:flex; gap:.7rem; align-items:flex-start; padding:.7rem .85rem;
+  border:1px solid var(--rule-strong); background:var(--paper); cursor:pointer; transition:border-color .1s,background .1s}
+.opcoes label:hover{border-color:var(--accent)}
+.opcoes input{margin-top:.28rem; flex:0 0 auto; accent-color:var(--accent)}
+.opcoes .letra{font-family:var(--font-display); font-weight:700; color:var(--ink-soft)}
+.opcoes label.marcada{border-color:var(--accent); background:var(--paper-well)}
+
+/* Barra de progresso */
+.barra{position:sticky; bottom:0; background:var(--paper-raised); border-top:1px solid var(--rule-strong);
+  padding:.7rem 0; margin-top:1.4rem}
+.barra .wrap{display:flex; align-items:center; gap:.8rem; justify-content:space-between; padding-top:0; padding-bottom:0}
+.barra .prog{font-size:.88rem; color:var(--graphite)}
+.barra .prog b{color:var(--ink)}
+.btn{background:var(--accent); color:var(--accent-contrast); border:1px solid var(--accent);
+  padding:.7rem 1.1rem; font:600 .95rem var(--font-body); cursor:pointer; border-radius:2px}
+.btn:hover{opacity:.92}
+.btn.sec{background:transparent; color:var(--ink-soft)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+
+/* Resultado */
+.resultado{border:1px solid var(--rule-strong); background:var(--paper-raised); padding:1.4rem 1.5rem; margin:1.5rem 0}
+.resultado h2{font-family:var(--font-display); font-weight:400; margin:0 0 .3rem; font-size:1.2rem}
+.placar{font-family:var(--font-display); font-size:1.9rem; color:var(--ink); margin:.2rem 0 .4rem}
+.status{margin:1rem 0; padding:.8rem 1rem; font-size:.92rem; border-left:3px solid var(--rule-strong)}
+.status.ok{background:var(--good-bg); border-left-color:var(--good); color:var(--good)}
+.status.pend{background:var(--bad-bg); border-left-color:var(--bad); color:var(--bad)}
+.acoes{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.8rem}
+.mini{font-size:.85rem; color:var(--graphite); margin-top:.9rem}
+footer.pe{margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--rule);
+  font-size:.82rem; color:var(--graphite); text-align:left}
+.hidden{display:none !important}
