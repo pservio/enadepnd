@@ -22,7 +22,7 @@
 window.CONFIG = {
   // Google Apps Script → planilha "simulados enade/pnd" (abas simulado1/2/3).
   // Só funciona se a implantação estiver com "Quem pode acessar: Qualquer pessoa".
-  ENDPOINT: "https://script.google.com/macros/s/AKfycbwrkgWtZ8myRgTj9KGZD1iQptRICuqw82_GO_pAn4jOEHBzGkj2CObxuTySGMUqr8LKlQ/exec",
+  ENDPOINT: "https://script.google.com/macros/s/AKfycbwKxVK-_ZgGPIPVzhuokBc7yNd514TDo_XJQw1rmVfj3mA0npgJD3WLyIQ5a0un6BOcRw/exec",
   ENDPOINT_TIPO: "auto",           // "auto" | "formspree" | "appsscript"
 
   PROFESSOR_NOME: "Prof. Pablo",
