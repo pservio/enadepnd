@@ -7,7 +7,7 @@ window.PROVAS = {
   "tema": "Ensino, Metodologias e Avaliação do Ensino de Arte",
   "n": 12,
   "minutos": 48,
-  "g": "QUFEQUJEQUJEQkNC",
+  "g": "QUFEQUJEQUJEQkNE",
   "questoes": [
    {
     "n": 1,

@@ -123,7 +123,7 @@ vermelho = errou, com o total da turma por questão em "mapa de calor".
 
 | | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Q11 | Q12 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Dia 14** | A | A | D | A | B | D | A | B | D | B | C | B |
+| **Dia 14** | A | A | D | A | B | D | A | B | D | B | C | D |
 | **Dia 15** | A | B | B | D | B | A | C | D | B | D | A | B |
 | **Dia 16** | A | C | A | B | C | A | B | C | A | D | A | B |
 

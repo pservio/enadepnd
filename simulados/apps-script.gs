@@ -19,6 +19,10 @@
  *   Nas abas de painel, marque a caixa "Esconder nomes" (A2) para projetar.
  *   Para exportar: Arquivo > Fazer download > PDF (nativo do Sheets).
  *
+ *   Se corrigir uma chave em GABARITO (abaixo): salve (💾), recarregue a
+ *   planilha e rode "Simulados > Recalcular acertos" para reescrever as colunas
+ *   "acertos"/"em_branco" das abas simulado1/2/3, depois "Atualizar painel".
+ *
  * SEGURANÇA
  *   - "Executar como: Eu" + "Qualquer pessoa": o script só lê/escreve NESTA
  *     planilha (escopo "planilha atual"). Não acessa Drive, e-mail nem outras
@@ -29,7 +33,8 @@
  */
 
 var ABAS     = { dia14: 'simulado1', dia15: 'simulado2', dia16: 'simulado3' };
-var GABARITO = { dia14: 'AADABDABDBCB', dia15: 'ABBDBACDBDAB', dia16: 'ACABCABCADAB' };
+var GABARITO = { dia14: 'AADABDABDBCD', dia15: 'ABBDBACDBDAB', dia16: 'ACABCABCADAB' };
+// Dia 14 Q12 (ENADE 2024 Q62, Caderno 0101): chave oficial D — corrigido de B.
 var TITULO   = {
   dia14: 'Dia 14 · Ensino, Metodologias e Avaliação',
   dia15: 'Dia 15 · Teoria da Arte e da Imagem · Criação, Percepção, Interpretação',
@@ -89,7 +94,43 @@ function limpa(v) {
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('Simulados')
     .addItem('Atualizar painel', 'montarPaineis')
+    .addItem('Recalcular acertos (após corrigir gabarito)', 'recalcularAcertos')
     .addToUi();
+}
+
+/**
+ * Reescreve as colunas "acertos" e "em_branco" das abas simulado1/2/3 a partir
+ * da coluna "respostas" e do GABARITO atual. Use depois de corrigir uma chave.
+ * Não apaga linhas nem toca nas respostas — só recalcula D e E.
+ */
+function recalcularAcertos() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var total = 0;
+  Object.keys(ABAS).forEach(function (id) {
+    var sh = ss.getSheetByName(ABAS[id]);
+    if (!sh || sh.getLastRow() < 2) return;
+    var gab = GABARITO[id].split('');
+    var n = sh.getLastRow() - 1;
+    var resp = sh.getRange(2, 6, n, 1).getValues(); // coluna F = respostas
+    var saida = resp.map(function (r) {
+      var letras = [];
+      for (var i = 0; i < NQ; i++) letras.push('-');
+      String(r[0] || '').split(/\s+/).forEach(function (tok) {
+        var p = tok.split(':'), q = parseInt(p[0], 10);
+        if (q >= 1 && q <= NQ) letras[q - 1] = String(p[1] || '-').toUpperCase().charAt(0) || '-';
+      });
+      var acertos = 0, brancos = 0;
+      for (var i = 0; i < NQ; i++) {
+        if (letras[i] === '-') brancos++;
+        else if (letras[i] === gab[i]) acertos++;
+      }
+      return [acertos + '/' + NQ, brancos];
+    });
+    sh.getRange(2, 4, n, 1).setNumberFormat('@'); // evita "9/12" virar data
+    sh.getRange(2, 4, n, 2).setValues(saida);     // colunas D (acertos) e E (em_branco)
+    total += n;
+  });
+  ss.toast(total + ' linha(s) recalculada(s). Rode "Atualizar painel" em seguida.', 'Simulados', 5);
 }
 
 function montarPaineis() {
