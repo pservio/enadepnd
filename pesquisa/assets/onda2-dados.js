@@ -10,7 +10,7 @@ window.ONDA2 = {
           ajuda: "Use o MESMO código que você usou no questionário de antes da prova (ex.: duas primeiras letras do nome da sua mãe + dia do seu nascimento)."
         },
         { id: "participou_microaulas", tipo: "radio", obrigatorio: true, opcoes: ["Sim", "Não"],
-          label: "Confirmando: você participou das microaulas de revisão (segunda, terça e quarta-feira)?" }
+          label: "Confirmando: você participou de alguma das aulas de revisão (presenciais ou online)?" }
       ]
     },
     {
