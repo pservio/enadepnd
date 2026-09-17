@@ -5,9 +5,9 @@ window.ONDA2 = {
       titulo: "Identificação",
       campos: [
         {
-          id: "codigo", tipo: "texto", obrigatorio: true,
-          label: "Código de identificação pessoal",
-          ajuda: "Use o MESMO código que você usou no questionário de antes da prova (ex.: duas primeiras letras do nome da sua mãe + dia do seu nascimento)."
+          id: "nome", tipo: "texto", obrigatorio: true,
+          label: "Nome completo",
+          ajuda: "Use o MESMO nome que você usou no questionário de antes da prova."
         },
         { id: "participou_microaulas", tipo: "radio", obrigatorio: true, opcoes: ["Sim", "Não"],
           label: "Confirmando: você participou de alguma das aulas de revisão (presenciais ou online)?" }

@@ -29,7 +29,7 @@
 // pesquisa/assets/onda1-dados.js e onda2-dados.js.
 var CAMPOS = {
   onda1: [
-    "codigo", "semestre", "ja_prestou_antes", "participou_microaulas", "quantas_microaulas",
+    "nome", "semestre", "ja_prestou_antes", "participou_microaulas", "quantas_microaulas",
     "autoeficacia_1", "autoeficacia_2", "autoeficacia_3",
     "ansiedade_4", "ansiedade_5", "ansiedade_6",
     "dominio_7", "dominio_8", "dominio_9",
@@ -38,7 +38,7 @@ var CAMPOS = {
     "motivo_nao_participou_17", "motivo_nao_participou_detalhe"
   ],
   onda2: [
-    "codigo", "participou_microaulas",
+    "nome", "participou_microaulas",
     "autoeficacia_1", "autoeficacia_2", "autoeficacia_3",
     "ansiedade_4", "ansiedade_5", "ansiedade_6",
     "dominio_7", "dominio_8", "dominio_9",

@@ -225,7 +225,7 @@
       var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
       var a = el("a", {
         href: URL.createObjectURL(blob),
-        download: "pesquisa-" + config.onda + "-" + (envio.codigo || "resposta") + ".csv"
+        download: "pesquisa-" + config.onda + "-" + (envio.nome || "resposta") + ".csv"
       });
       document.body.appendChild(a); a.click(); a.remove();
     }

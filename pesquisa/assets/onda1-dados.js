@@ -5,10 +5,9 @@ window.ONDA1 = {
       titulo: "Identificação",
       campos: [
         {
-          id: "codigo", tipo: "texto", obrigatorio: true,
-          label: "Código de identificação pessoal",
-          ajuda: "Ex.: duas primeiras letras do nome da sua mãe + dia do seu nascimento (ex.: MA15). " +
-                 "Use o MESMO código no questionário depois da prova, de domingo — é assim que suas duas respostas são pareadas sem usar seu nome."
+          id: "nome", tipo: "texto", obrigatorio: true,
+          label: "Nome completo",
+          ajuda: "Use o MESMO nome no questionário depois da prova, de domingo — é assim que suas duas respostas são pareadas."
         },
         { id: "semestre", tipo: "texto", obrigatorio: true, label: "Semestre / período do curso" },
         { id: "ja_prestou_antes", tipo: "radio", obrigatorio: true, opcoes: ["Sim", "Não"],

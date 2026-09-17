@@ -58,8 +58,8 @@ não pegou — repita escolhendo "Qualquer pessoa".
 
 Uma aba por onda (`onda1`, `onda2`), uma linha por envio, colunas na mesma
 ordem dos itens dos questionários (ver `pesquisa/assets/onda1-dados.js` e
-`onda2-dados.js`). A coluna `codigo` é o identificador pessoal que permite
-parear as duas ondas de um mesmo aluno sem usar o nome.
+`onda2-dados.js`). A coluna `nome` é o identificador que permite parear as
+duas ondas de um mesmo aluno.
 
 ## Segurança
 
