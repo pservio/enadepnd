@@ -14,7 +14,7 @@ window.ONDA1 = {
         { id: "ja_prestou_antes", tipo: "radio", obrigatorio: true, opcoes: ["Sim", "Não"],
           label: "Já prestou o ENADE antes?" },
         { id: "participou_microaulas", tipo: "radio", obrigatorio: true, opcoes: ["Sim", "Não"],
-          label: "Participou das microaulas de revisão (segunda, terça e quarta-feira)?" },
+          label: "Participou de alguma das aulas de revisão (presenciais ou online)?" },
         { id: "quantas_microaulas", tipo: "select", opcoes: ["1", "2", "3"],
           label: "Quantas das 3 você assistiu?",
           mostrarSe: { campo: "participou_microaulas", valor: "Sim" } }
