@@ -14,7 +14,7 @@
 window.CONFIG = {
   // Cole aqui a URL /exec depois de implantar pesquisa/apps-script.gs
   // (veja pesquisa/COMO-CONFIGURAR.md).
-  ENDPOINT: "",
+  ENDPOINT: "https://script.google.com/macros/s/AKfycbxzA_xOntHoS9sBI6Fj6fapTNB5yNB7I9uP-Y6CC_F0Kjl3-QVmaJFGFV3T8ULDI4JN/exec",
   ENDPOINT_TIPO: "auto",           // "auto" | "formspree" | "appsscript"
 
   PROFESSOR_NOME: "Prof. Pablo",
