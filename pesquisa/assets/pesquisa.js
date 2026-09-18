@@ -48,6 +48,16 @@
     }
 
     function renderCampo(campo) {
+      if (campo.tipo === "checkbox") {
+        var wrapC = el("div", { class: "campo campo-consentimento" });
+        var inputC = el("input", { type: "checkbox", id: campo.id, name: campo.id });
+        inputC.addEventListener("change", function () { estado[campo.id] = inputC.checked ? "Sim" : ""; });
+        wrapC.appendChild(el("label", { for: campo.id, class: "consentimento" }, [
+          inputC, " " + campo.label + (campo.obrigatorio ? " " : "")
+        ]));
+        if (campo.obrigatorio) wrapC.querySelector("label").appendChild(el("span", { class: "obrigatorio" }, ["*"]));
+        return wrapC;
+      }
       var wrap = el("div", { class: "campo" });
       if (campo.label) {
         wrap.appendChild(el("label", { class: "rotulo" }, [
@@ -110,6 +120,8 @@
         root.querySelectorAll('[name="' + id + '"]').forEach(function (elx) {
           if (elx.type === "radio") {
             if (elx.value === val) { elx.checked = true; if (elx.closest("label")) elx.closest("label").classList.add("marcada"); }
+          } else if (elx.type === "checkbox") {
+            elx.checked = (val === "Sim");
           } else {
             elx.value = val;
           }

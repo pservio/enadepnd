@@ -1,6 +1,25 @@
+(function () {
+  var CFG = window.CONFIG || {};
+  var PROF = CFG.PROFESSOR_NOME || "o(a) professor(a)";
+  var CONTATO = CFG.PROFESSOR_CONTATO || "";
+
 window.ONDA1 = {
   onda: "onda1",
   blocos: [
+    {
+      titulo: "Antes de começar",
+      subtitulo: "Esta pesquisa é conduzida por " + PROF + " sobre o efeito das aulas de revisão para o ENADE. " +
+        "Sua participação é voluntária e não tem nenhuma relação com sua nota nesta ou em qualquer disciplina — " +
+        "você pode deixar de responder a qualquer momento, sem nenhum prejuízo. Pedimos seu nome apenas para " +
+        "parear suas respostas deste questionário com as do questionário aplicado depois da prova; em qualquer " +
+        "análise, apresentação ou publicação dos resultados, você será identificado(a) por um pseudônimo (nome " +
+        "fictício), nunca pelo seu nome verdadeiro. Seus dados serão tratados com confidencialidade e usados " +
+        "apenas para fins de pesquisa acadêmica." + (CONTATO ? " Dúvidas podem ser enviadas para " + CONTATO + "." : ""),
+      campos: [
+        { id: "concordo_participar", tipo: "checkbox", obrigatorio: true,
+          label: "Li as informações acima e concordo em participar voluntariamente desta pesquisa." }
+      ]
+    },
     {
       titulo: "Identificação",
       campos: [
@@ -77,3 +96,5 @@ window.ONDA1 = {
     }
   ]
 };
+
+})();
