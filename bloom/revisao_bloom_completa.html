@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Revisão final de Bloom — questões restantes</title>
+<style>
+  :root{
+    --bg:#faf8f4; --panel:#fff; --ink:#1f2a24; --muted:#6b7a72; --line:#e2ddd3;
+    --accent:#3f6b52; --accent-ink:#fff; --warn:#a8541f;
+    --pablo:#3f6b52; --claude:#4a5fb5; --jordana:#a8541f;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--ink);margin:0;padding:0 0 80px;}
+  header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 24px;z-index:10;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0;font-weight:600}
+  header .prog{font-family:Arial,sans-serif;font-size:13px;color:var(--muted)}
+  header .bar{width:200px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  header .bar > div{height:100%;background:var(--accent);width:0%}
+  main{max-width:820px;margin:24px auto;padding:0 24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:28px 32px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .meta{font-family:Arial,sans-serif;font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .meta b{color:var(--ink)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#eef1ee}
+  .goldenrule{font-family:Arial,sans-serif;background:#eef3f0;border:1px solid #cfe0d6;color:#2f4a3b;border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.5;margin-bottom:8px}
+  .goldenrule b{color:var(--accent)}
+  .protocolo-extra{font-family:Arial,sans-serif;background:#eef3f0;border:1px solid #cfe0d6;border-radius:8px;margin-bottom:16px;overflow:hidden}
+  .protocolo-extra summary{padding:8px 14px;font-size:12px;color:var(--accent);cursor:pointer;font-weight:700;list-style:none}
+  .protocolo-extra summary::-webkit-details-marker{display:none}
+  .protocolo-extra summary::before{content:"▸ "}
+  .protocolo-extra[open] summary::before{content:"▾ "}
+  .protocolo-extra .inner{padding:2px 14px 12px;font-size:12.5px;line-height:1.55;color:#2f4a3b}
+  .protocolo-extra .inner h4{font-size:11.5px;margin:10px 0 4px;text-transform:uppercase;letter-spacing:.03em;color:var(--accent)}
+  .protocolo-extra .inner ul{margin:4px 0 8px;padding-left:18px}
+  .protocolo-extra .inner li{margin-bottom:4px}
+  .protocolo-extra .inner b.trap{color:var(--warn)}
+  .enunciado{font-size:16px;line-height:1.6;white-space:pre-wrap;margin-bottom:18px}
+  .alternativas{list-style:none;padding:0;margin:0 0 20px;font-family:Arial,sans-serif;font-size:14px;line-height:1.5}
+  .alternativas li{padding:6px 10px;border-radius:6px;margin-bottom:4px}
+  .alternativas li.correta{background:#eaf4ec;border:1px solid #bcdcc4;font-weight:600}
+  .raters{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;font-family:Arial,sans-serif}
+  .rater{flex:1;min-width:150px;border-radius:8px;padding:10px 12px;color:#fff}
+  .rater.pablo{background:var(--pablo)}
+  .rater.claude{background:var(--claude)}
+  .rater.jordana{background:var(--jordana)}
+  .rater .who{font-size:11px;opacity:.85;text-transform:uppercase;letter-spacing:.04em}
+  .rater .val{font-size:16px;font-weight:700;margin-top:2px}
+  .decision{font-family:Arial,sans-serif;border-top:1px solid var(--line);padding-top:18px}
+  .decision label{display:block;font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.03em}
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px}
+  .options button{font-family:Arial,sans-serif;text-align:left;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:#fff;cursor:pointer;transition:.12s;display:flex;flex-direction:column;gap:3px}
+  .options button:hover{border-color:var(--accent)}
+  .options button .opt-title{font-size:13px;font-weight:700}
+  .options button .opt-desc{font-size:11.5px;line-height:1.35;color:var(--muted)}
+  .options button.selected{background:var(--accent);border-color:var(--accent)}
+  .options button.selected .opt-title{color:var(--accent-ink)}
+  .options button.selected .opt-desc{color:#e4ede8}
+  textarea{width:100%;min-height:56px;font-family:Arial,sans-serif;font-size:13px;border:1px solid var(--line);border-radius:6px;padding:8px;resize:vertical}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font-family:Arial,sans-serif}
+  .nav button{padding:10px 18px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13px}
+  .nav button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav button:disabled{opacity:.35;cursor:not-allowed}
+  .jumpwrap{text-align:center;margin-top:10px;font-family:Arial,sans-serif;font-size:12px;color:var(--muted)}
+  .toolbar{max-width:820px;margin:0 auto;padding:10px 24px;display:flex;gap:10px;justify-content:flex-end;font-family:Arial,sans-serif}
+  .toolbar button{padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13px}
+  .toolbar button.export{background:var(--warn);color:#fff;border-color:var(--warn)}
+  .toolbar button.secondary{background:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:4px;max-width:820px;margin:14px auto;padding:0 24px;font-family:Arial,sans-serif;max-height:220px;overflow-y:auto}
+  .grid a{display:block;text-align:center;font-size:11px;padding:5px 0;border-radius:5px;background:#eee;color:#555;text-decoration:none;cursor:pointer}
+  .grid a.done{background:var(--accent);color:#fff}
+  .grid a.changed{box-shadow:0 0 0 2px var(--warn) inset}
+  .grid a.current{outline:2px solid var(--warn)}
+  .edlabel{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Revisão final de Bloom — questões restantes</h1>
+  <div class="prog"><span id="progText">carregando…</span></div>
+  <div class="bar"><div id="progBar"></div></div>
+</header>
+<div class="toolbar" style="justify-content:flex-start;padding-bottom:0">
+  <span style="font-size:12px;color:var(--muted)">Revisão manual questão por questão, motivada pelo amadurecimento dos critérios de classificação (protocolo de 2026-09-18/19). Só aparecem aqui as questões ainda sem decisão registrada — as já adjudicadas ou já revisadas em rodadas anteriores foram removidas desta lista. Diferenças em relação à leitura original dos três codificadores ficam marcadas com borda laranja na grade.</span>
+</div>
+
+<div class="toolbar">
+  <button id="btnExport" class="export">Exportar CSV (bloom_revisado)</button>
+  <button id="btnJumpUnreviewed" class="secondary">Ir para a próxima não revisada</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<main>
+  <div class="card">
+    <div class="meta">
+      <span class="tag" id="metaKey">—</span>
+      <span>Edição <b id="metaEdicao">—</b> · Questão <b id="metaNumero">—</b></span>
+      <span>Tema (unânime/variado): <b id="metaTema">—</b></span>
+    </div>
+    <div class="goldenrule"><b>Regra de ouro (Compreender × Analisar):</b> se a questão pode ser respondida só associando o objetivo do texto ao gabarito, é <b>Compreender</b>. Se exige abrir a "caixa-preta" da obra — relação entre forma física, contexto histórico, intenção do autor e teoria subjacente —, é <b>Analisar</b>.</div>
+    <details class="protocolo-extra">
+      <summary>Marcadores de Nível 4 e armadilhas de falso Nível 4 (protocolo atualizado 2026-09-19)</summary>
+      <div class="inner">
+        <h4>Pergunta-chave</h4>
+        A questão tem uma "história"/texto explicativo de apoio, ou o candidato está sozinho com a imagem/obra? Com historinha ou tirinha+citação, desconfie — costuma ser Nível 2 disfarçado. Sem rede de segurança textual, favorece Nível 4 de verdade.
+        <h4>4 marcadores definitivos do Nível 4 (basta 1 presente)</h4>
+        <ul>
+          <li><b>Efeito Kosuth</b> (decomposição semiótica/formal): imagem isolada exige desestruturar cor, suporte, escala, objeto real vs. imagem vs. texto para deduzir o conceito.</li>
+          <li><b>Confronto dialético de temporalidades</b>: duas obras de épocas/linguagens distintas (ex.: Mona Lisa × L.H.O.O.Q.), exigindo explicar como uma ressignifica a outra.</li>
+          <li><b>Desconstrução discursiva/ideológica</b>: matéria-prima ou suporte constroem a denúncia (ex.: Krajcberg, Grada Kilomba).</li>
+          <li><b>Independência interpretativa</b>: o texto de apoio não entrega o significado; a relação forma↔teoria é feita inteiramente pelo candidato.</li>
+        </ul>
+        <h4>2 armadilhas de falso Nível 4 (na verdade, Nível 2)</h4>
+        <ul>
+          <li><b class="trap">Historinha pedagógica:</b> nome de professor/aluno/sala de aula só veste de estudo de caso uma checagem de definição, com distratores óbvios de ensino tradicional.</li>
+          <li><b class="trap">Falso "correlacione os textos":</b> tirinha + citação teórica resolvida por eliminação simples via afirmativa anti-pedagógica evidente — não exige desconstruir nada.</li>
+        </ul>
+      </div>
+    </details>
+    <div class="enunciado" id="enunciado">Carregando…</div>
+    <ul class="alternativas" id="alternativas"></ul>
+
+    <div class="raters">
+      <div class="rater pablo"><div class="who">Pablo (original)</div><div class="val" id="bloomPablo">—</div></div>
+      <div class="rater claude"><div class="who">Claude — IA (original)</div><div class="val" id="bloomClaude">—</div></div>
+      <div class="rater jordana"><div class="who">Jordana (original)</div><div class="val" id="bloomJordana">—</div></div>
+    </div>
+
+    <div class="decision">
+      <label>Decisão final revisada (Taxonomia de Bloom)</label>
+      <div class="options" id="bloomOptions">
+        <button data-v="Lembrar"><span class="opt-title">Lembrar</span><span class="opt-desc">Reconhecer ou recordar um fato, termo ou definição isolada, sem exigir compreensão do significado ou relação com outros conceitos.</span></button>
+        <button data-v="Compreender"><span class="opt-title">Compreender</span><span class="opt-desc">Entender/parafrasear um conceito já dado; interpretar informação explícita no enunciado ou na imagem, sem precisar ir além do que está apresentado.</span></button>
+        <button data-v="Aplicar"><span class="opt-title">Aplicar</span><span class="opt-desc">Usar um conceito, método ou critério conhecido numa situação concreta nova, mas análoga a um caso já estudado — executar um procedimento.</span></button>
+        <button data-v="Analisar"><span class="opt-title">Analisar</span><span class="opt-desc">Decompor, comparar ou relacionar partes; distinguir elementos, identificar relação causa-efeito ou a estrutura de um argumento/obra.</span></button>
+        <button data-v="Avaliar"><span class="opt-title">Avaliar</span><span class="opt-desc">Julgar, criticar ou justificar uma posição com base em critérios; ponderar alternativas e argumentar por uma escolha entre elas.</span></button>
+        <button data-v="Criar"><span class="opt-title">Criar</span><span class="opt-desc">Propor algo novo: reorganizar elementos numa síntese original, formular um planejamento pedagógico ou solução inédita para um problema.</span></button>
+      </div>
+      <label>Notas (opcional)</label>
+      <textarea id="notas" placeholder="Ex.: mantive Aplicar — a questão pede transposição de uma norma a um caso, não desconstrução."></textarea>
+    </div>
+
+    <div class="nav">
+      <button id="btnPrev">&larr; Anterior</button>
+      <span id="counter" style="font-size:13px;color:var(--muted)"></span>
+      <button id="btnNext" class="primary">Próxima &rarr;</button>
+    </div>
+    <div class="jumpwrap">Salvo automaticamente no navegador (localStorage) a cada decisão.</div>
+  </div>
+</main>
+
+<script src="revisao_bloom_completa_dados.js"></script>
+<script>
+let QUESTOES = window.REVISAO_BLOOM_COMPLETA || [];
+
+const STORAGE_KEY = 'revisao_bloom_completa_v1';
+let decisions = {};
+try { decisions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ decisions = {}; }
+
+let idx = 0;
+
+function save(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions)); } catch(e){}
+}
+
+function init(){
+  buildGrid();
+  render();
+}
+
+if (QUESTOES.length) { init(); }
+else { document.getElementById('enunciado').textContent = 'Erro: revisao_bloom_completa_dados.js não carregou (window.REVISAO_BLOOM_COMPLETA vazio).'; }
+
+function originalSet(q){
+  return new Set([q.bloom_pablo, q.bloom_claude, q.bloom_jordana].join(';').split(';').map(s=>s.trim()).filter(Boolean));
+}
+
+function changedFromOriginal(q, finalVal){
+  if (!finalVal) return false;
+  return !originalSet(q).has(finalVal);
+}
+
+function buildGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  QUESTOES.forEach((q,i)=>{
+    const a = document.createElement('a');
+    a.textContent = q.key.replace('2025_PV1_','PV').replace(/^(\d{2})\d{2}_/, '$1');
+    a.title = q.key;
+    a.href = '#';
+    a.onclick = (e)=>{ e.preventDefault(); idx=i; render(); };
+    const d = decisions[q.key];
+    if (d && d.bloom_final) a.classList.add('done');
+    if (d && d.bloom_final && changedFromOriginal(q, d.bloom_final)) a.classList.add('changed');
+    if (i===idx) a.classList.add('current');
+    grid.appendChild(a);
+  });
+}
+
+function render(){
+  const q = QUESTOES[idx];
+  document.getElementById('metaKey').textContent = q.key;
+  document.getElementById('metaEdicao').textContent = q.edicao;
+  document.getElementById('metaNumero').textContent = q.numero;
+  const temas = [q.tema_pablo, q.tema_claude, q.tema_jordana];
+  const temaUnico = temas.every(t=>t===temas[0]);
+  document.getElementById('metaTema').textContent = temaUnico ? ('Tema ' + temas[0] + ' (unânime)') : ('Pablo:' + q.tema_pablo + ' Claude:' + q.tema_claude + ' Jordana:' + q.tema_jordana);
+  document.getElementById('enunciado').textContent = q.enunciado || '(sem enunciado)';
+
+  const ul = document.getElementById('alternativas');
+  ul.innerHTML = '';
+  const letras = ['A','B','C','D','E'];
+  letras.forEach(l=>{
+    const txt = q.alternativas[l];
+    if (!txt) return;
+    const li = document.createElement('li');
+    li.textContent = l + ') ' + txt;
+    if (l === q.gabarito) li.classList.add('correta');
+    ul.appendChild(li);
+  });
+
+  document.getElementById('bloomPablo').textContent = q.bloom_pablo || '—';
+  document.getElementById('bloomClaude').textContent = q.bloom_claude || '—';
+  document.getElementById('bloomJordana').textContent = q.bloom_jordana || '—';
+
+  const saved = decisions[q.key] || {};
+  document.querySelectorAll('#bloomOptions button').forEach(b=>{
+    b.classList.toggle('selected', b.dataset.v === saved.bloom_final);
+  });
+  document.getElementById('notas').value = saved.notas || '';
+
+  document.getElementById('btnPrev').disabled = (idx===0);
+  document.getElementById('counter').textContent = (idx+1) + ' / ' + QUESTOES.length;
+  updateProgress();
+  buildGrid();
+}
+
+document.getElementById('bloomOptions').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const q = QUESTOES[idx];
+  decisions[q.key] = decisions[q.key] || {};
+  decisions[q.key].bloom_final = btn.dataset.v;
+  decisions[q.key].notas = document.getElementById('notas').value;
+  save();
+  render();
+});
+
+document.getElementById('notas').addEventListener('input', (e)=>{
+  const q = QUESTOES[idx];
+  decisions[q.key] = decisions[q.key] || {};
+  decisions[q.key].notas = e.target.value;
+  save();
+});
+
+document.getElementById('btnPrev').onclick = ()=>{ if (idx>0){ idx--; render(); } };
+document.getElementById('btnNext').onclick = ()=>{ if (idx<QUESTOES.length-1){ idx++; render(); } else { alert('Última questão da lista.'); } };
+document.getElementById('btnJumpUnreviewed').onclick = ()=>{
+  const next = QUESTOES.findIndex(q => !(decisions[q.key] && decisions[q.key].bloom_final));
+  if (next === -1) { alert('Todas as questões já têm uma decisão registrada.'); return; }
+  idx = next;
+  render();
+};
+
+function updateProgress(){
+  const done = QUESTOES.filter(q => decisions[q.key] && decisions[q.key].bloom_final).length;
+  document.getElementById('progText').textContent = done + '/' + QUESTOES.length + ' revisadas';
+  document.getElementById('progBar').style.width = (100*done/QUESTOES.length) + '%';
+}
+
+document.getElementById('btnExport').onclick = ()=>{
+  let csv = 'edicao,numeroEnade,bloom_pablo,bloom_claude,bloom_jordana,bloom_revisado,mudou,notas\n';
+  QUESTOES.forEach(q=>{
+    const d = decisions[q.key] || {};
+    const esc = s => '"' + String(s||'').replace(/"/g,'""') + '"';
+    const mudou = d.bloom_final && changedFromOriginal(q, d.bloom_final) ? 'sim' : 'nao';
+    csv += [q.edicao, q.numero, q.bloom_pablo, q.bloom_claude, q.bloom_jordana, d.bloom_final||'', mudou, d.notas||''].map(esc).join(',') + '\n';
+  });
+  const blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'revisao_bloom_completa_resultado.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+document.addEventListener('keydown', (e)=>{
+  if (e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight') document.getElementById('btnNext').click();
+  if (e.key === 'ArrowLeft') document.getElementById('btnPrev').click();
+});
+</script>
+</body>
+</html>
