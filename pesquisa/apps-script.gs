@@ -313,6 +313,55 @@ function montarPainelPesquisa() {
   });
   linha++;
 
+  // Comparação real: Onda 1 (antes da prova) x Onda 2 (depois da prova), pares completos.
+  // Mais forte que a comparação retrospectiva acima porque são duas medições de
+  // verdade, não uma lembrança reconstruída.
+  titulo('Comparação real — Onda 1 (antes da prova) x Onda 2 (depois da prova) — pares completos (' + pares.length + ')', 13);
+  var cab2 = ['Nome', 'Grupo', 'Autoefic. antes', 'Autoefic. depois', 'Δ',
+    'Ansiedade antes', 'Ansiedade depois', 'Δ', 'Domínio antes', 'Domínio depois', 'Δ',
+    'Desempenho autoavaliado', 'Dificuldade percebida'];
+  sh.getRange(linha, 1, 1, cab2.length).setValues([cab2]).setFontWeight('bold').setBackground('#e8e8e8');
+  linha++;
+  var deltasPorGrupo = {
+    'Participantes': { auto: [], ansi: [], dom: [] },
+    'Não participantes': { auto: [], ansi: [], dom: [] }
+  };
+  pares.sort(function (a, b) { return a.localeCompare(b, 'pt'); }).forEach(function (nome) {
+    var r1 = o1.porAluno[nome], r2 = o2.porAluno[nome];
+    var grupo = (String(r1.participou_microaulas || '').trim().toLowerCase() === 'sim') ? 'Participantes' : 'Não participantes';
+    var auto1 = media3(r1, 'autoeficacia_1', 'autoeficacia_2', 'autoeficacia_3');
+    var auto2 = media3(r2, 'autoeficacia_1', 'autoeficacia_2', 'autoeficacia_3');
+    var ansi1 = media3(r1, 'ansiedade_4', 'ansiedade_5', 'ansiedade_6');
+    var ansi2 = media3(r2, 'ansiedade_4', 'ansiedade_5', 'ansiedade_6');
+    var dom1 = media3(r1, 'dominio_7', 'dominio_8', 'dominio_9');
+    var dom2 = media3(r2, 'dominio_7', 'dominio_8', 'dominio_9');
+    var dAuto2 = (auto1 !== '' && auto2 !== '') ? arred(auto2 - auto1) : '';
+    var dAnsi2 = (ansi1 !== '' && ansi2 !== '') ? arred(ansi2 - ansi1) : '';
+    var dDom2 = (dom1 !== '' && dom2 !== '') ? arred(dom2 - dom1) : '';
+    if (dAuto2 !== '') deltasPorGrupo[grupo].auto.push(dAuto2);
+    if (dAnsi2 !== '') deltasPorGrupo[grupo].ansi.push(dAnsi2);
+    if (dDom2 !== '') deltasPorGrupo[grupo].dom.push(dDom2);
+    var linhaVal2 = [nome, grupo, auto1, auto2, dAuto2, ansi1, ansi2, dAnsi2, dom1, dom2, dDom2,
+      r2.desempenho_geral_10, r2.dificuldade_prova_11];
+    sh.getRange(linha, 1, 1, linhaVal2.length).setValues([linhaVal2]);
+    corDelta(sh.getRange(linha, 5), dAuto2, true);
+    corDelta(sh.getRange(linha, 8), dAnsi2, false); // ansiedade: cair é bom
+    corDelta(sh.getRange(linha, 11), dDom2, true);
+    linha++;
+  });
+  linha++;
+
+  titulo('Médias dos deltas reais (Onda2 − Onda1), por grupo', 5);
+  sh.getRange(linha, 1, 1, 5).setValues([['Grupo', 'N', 'ΔAutoeficácia', 'ΔAnsiedade', 'ΔDomínio']]).setFontWeight('bold').setBackground('#e8e8e8');
+  linha++;
+  function mediaArr(arr) { return arr.length ? arred(arr.reduce(function (s, x) { return s + x; }, 0) / arr.length) : ''; }
+  ['Participantes', 'Não participantes'].forEach(function (g) {
+    var d = deltasPorGrupo[g];
+    sh.getRange(linha, 1, 1, 5).setValues([[g, d.auto.length, mediaArr(d.auto), mediaArr(d.ansi), mediaArr(d.dom)]]);
+    linha++;
+  });
+  linha++;
+
   var naoIdent = o1.naoIdentificados.concat(o2.naoIdentificados);
   if (naoIdent.length) {
     titulo('Nomes não identificados na lista oficial (' + naoIdent.length + ') — confira manualmente', 4);
@@ -326,7 +375,7 @@ function montarPainelPesquisa() {
   }
 
   sh.setColumnWidth(1, 230);
-  for (var c = 2; c <= 12; c++) sh.setColumnWidth(c, 105);
+  for (var c = 2; c <= 13; c++) sh.setColumnWidth(c, 105);
   sh.setFrozenRows(2);
   ss.toast('Painel atualizado.', 'Pesquisa', 4);
 }
