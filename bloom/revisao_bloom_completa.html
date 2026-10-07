@@ -179,7 +179,7 @@ function init(){
 }
 
 if (QUESTOES.length) { init(); }
-else { document.getElementById('enunciado').textContent = 'Erro: revisao_bloom_completa_dados.js não carregou (window.REVISAO_BLOOM_COMPLETA vazio).'; }
+else { document.getElementById('enunciado').textContent = 'Revisão concluída: todas as questões do corpus têm decisão de Bloom registrada. (Se esperava ver questões aqui, confira se revisao_bloom_completa_dados.js carregou.)'; document.getElementById('progText').textContent = 'concluída'; }
 
 function originalSet(q){
   return new Set([q.bloom_pablo, q.bloom_claude, q.bloom_jordana].join(';').split(';').map(s=>s.trim()).filter(Boolean));
